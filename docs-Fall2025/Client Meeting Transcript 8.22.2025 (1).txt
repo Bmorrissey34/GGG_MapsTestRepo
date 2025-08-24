@@ -1,0 +1,1113 @@
+[Karen Armendariz] 15:00:45
+Can you hear me, Brendan?
+
+[Karen Armendariz] 15:01:03
+Okay, great. Just making sure.
+
+[Karen Armendariz] 15:01:17
+Okay.
+
+[Karen Armendariz] 15:10:20
+Hello!
+
+[Karen Armendariz] 15:10:26
+Hi. Sorry about that, I was having trouble…
+
+[Karen Armendariz] 15:10:31
+Connecting, and… I thought I had already sent… a link, I apologize.
+
+[Cengiz Gunay] 15:10:38
+No worries. How are you, Karen?
+
+[Karen Armendariz] 15:10:38
+Apologize. Um, we have Brendan on. Um, he's…
+
+[Karen Armendariz] 15:10:46
+Got some issues, so he's gonna be on the chat for the most part.
+
+[Cengiz Gunay] 15:10:51
+Remember, Brandon. Hi, Brandon.
+
+[Karen Armendariz] 15:10:55
+And our other two people have, uh. Other issues, so they weren't able to join us today.
+
+[Karen Armendariz] 15:11:03
+But, um… Yeah, so we're the group that's.
+
+[Karen Armendariz] 15:11:08
+Supposed to, um… revamped the GGC map.
+
+[Karen Armendariz] 15:11:14
+And, um, we just got the code, I think it was yesterday.
+
+[Cengiz Gunay] 15:11:14
+Mm-hmm.
+
+[Karen Armendariz] 15:11:19
+But the day before, so we've kind of looked at it a little bit.
+
+[Karen Armendariz] 15:11:23
+But, um, we do have some questions, of course. Um, and some of them were from other members of the group, um, who couldn't be here today, but.
+
+[Karen Armendariz] 15:11:32
+Um, I've got them all, so, um… I'll just… I guess I'll just start asking questions. I've never done this before, so if I'm doing something incorrectly, just let me know.
+
+[Karen Armendariz] 15:11:42
+Um. So, uh, the first…
+
+[Brendan Morrissey] 15:11:45
+So, I will just say, some of those questions don't really apply anymore, because I… wrote them previous to getting.
+
+[Brendan Morrissey] 15:11:51
+The code.
+
+[Karen Armendariz] 15:11:53
+Yes, yes, we had… collaborated on questions, and… Then we got the code, and…
+
+[Karen Armendariz] 15:12:00
+It's kind of been short notice this week, or… Forgetting all this together, so… Um, yeah, if, uh…
+
+[Karen Armendariz] 15:12:09
+Something sounds like we've… we should have, um… we should know, just…
+
+[Karen Armendariz] 15:12:14
+Just bear with us. Um, so I guess first we wanted to ask about, um, permissions and access.
+
+[Karen Armendariz] 15:12:23
+Um, if we had permission to use the existing campus maps and floor plans in our deliverables.
+
+[Cengiz Gunay] 15:12:31
+What's that mean? You have access to the code, right?
+
+[Karen Armendariz] 15:12:38
+Yes, but, um, I guess… do we have to have any kind of…
+
+[Karen Armendariz] 15:12:43
+Certain permission to use, I guess, the existing campus maps, the ones that are already there.
+
+[Cengiz Gunay] 15:12:48
+No, it's a public resource.
+
+[Karen Armendariz] 15:12:50
+Okay, that's… that's what I thought, okay.
+
+[Cengiz Gunay] 15:12:54
+Um, obviously, you're supposed to use those. The assets should be reused, because that's the main part of that app.
+
+[Cengiz Gunay] 15:13:03
+Old building maps, old campus maps. Though that's not the problem.
+
+[Cengiz Gunay] 15:13:09
+What we wanted to change, and actually the original authors of this.
+
+[Cengiz Gunay] 15:13:12
+Software, um… And the representative of that group, well, there were several groups, but.
+
+[Cengiz Gunay] 15:13:21
+The wall food and the state of the project are Mike Deiters and David Rivera.
+
+[Cengiz Gunay] 15:13:26
+And they're still around, actually. And they wanted to change this project themselves and rewrite it from scratch.
+
+[Cengiz Gunay] 15:13:35
+And the reason for that is that, initially, when they wrote this thing, they did not use any framework. They did not use React or Angular or anything like that.
+
+[Cengiz Gunay] 15:13:42
+They actually created a framework on… From scratch, on their own.
+
+[Karen Armendariz] 15:13:47
+Okay.
+
+[Cengiz Gunay] 15:13:50
+Which was fine at the time, but over the years, when multiple people added things to the project and stuff, it became a mess.
+
+[Cengiz Gunay] 15:13:58
+So they want… they want it to be reorganized, and they want to rewrite it from scratch, um.
+
+[Karen Armendariz] 15:13:58
+Uh, at sea.
+
+[Cengiz Gunay] 15:14:03
+But they never… they never got around to doing that. So now we are trying to do it without them.
+
+[Cengiz Gunay] 15:14:09
+And if we can do a good job, maybe they will be on board as well, but we'll see about that.
+
+[Karen Armendariz] 15:14:16
+Okay, so would you prefer us to just use. To continue with what they already have, or to start from scratch ourselves.
+
+[Cengiz Gunay] 15:14:25
+We don't want to continue what would I have.
+
+[Karen Armendariz] 15:14:27
+Okay, so we want to start from scratch. On this project.
+
+[Cengiz Gunay] 15:14:31
+Yes, but you need to reuse their assets and their technology.
+
+[Karen Armendariz] 15:14:35
+I see.
+
+[Cengiz Gunay] 15:14:36
+Just need to put it in a framework that's more easy to maintain.
+
+[Cengiz Gunay] 15:14:41
+Conforms to standards, can be updated.
+
+[Karen Armendariz] 15:14:45
+Okay. Um…
+
+[Karen Armendariz] 15:14:51
+So… One question we had was.
+
+[Karen Armendariz] 15:14:55
+If, um… who's the main approval contact for map updates?
+
+[Karen Armendariz] 15:15:03
+Restricted spaces of branding. Would that be you, I suppose?
+
+[Cengiz Gunay] 15:15:09
+No, not understanding these questions, can you say that again, please?
+
+[Brendan Morrissey] 15:15:13
+I think there's just another one that really doesn't apply anymore, because we have everything.
+
+[Karen Armendariz] 15:15:14
+I'm sorry? Right, okay. Um…
+
+[Karen Armendariz] 15:15:20
+Let's see…
+
+[Brendan Morrissey] 15:15:22
+Yeah, this was previous to me looking at… because the GT Maps was not working for.
+
+[Brendan Morrissey] 15:15:28
+Quite some time, or for a while. I mean, this was maybe a couple years ago, so I thought, like.
+
+[Cengiz Gunay] 15:15:30
+One was not working.
+
+[Brendan Morrissey] 15:15:35
+I thought it was, like, down, and um… So, when I…
+
+[Cengiz Gunay] 15:15:36
+No, it was… yeah, it was down for a short while, but we fixed it… Absolutely, thank you.
+
+[Brendan Morrissey] 15:15:41
+Okay. I probably just happened to check in that short downtime.
+
+[Cengiz Gunay] 15:15:47
+Let me double check that it's working right now. Yeah, I think there was… there was, like, a semester or something that was down, it's true.
+
+[Brendan Morrissey] 15:15:53
+Okay, so, um…
+
+[Cengiz Gunay] 15:15:54
+It's just been being forgotten, because, like, people don't know about it, you know?
+
+[Brendan Morrissey] 15:16:04
+Um, I guess, so… I was considering using Burnstack.
+
+[Brendan Morrissey] 15:16:09
+With that, I mean…
+
+[Cengiz Gunay] 15:16:11
+Okay, so one of the things, one of the special things about this project.
+
+[Cengiz Gunay] 15:16:15
+And one of the reasons it actually survived so long. Is it… was our design decisions, initial design decisions?
+
+[Cengiz Gunay] 15:16:23
+And we did not want to use a database app. And the reason for that is that most of the data that's needed for this project is static.
+
+[Brendan Morrissey] 15:16:26
+Okay.
+
+[Cengiz Gunay] 15:16:33
+It doesn't… the maps don't change from day to day, right? There is no reason to have an active database running somewhere.
+
+[Brendan Morrissey] 15:16:36
+Right.
+
+[Cengiz Gunay] 15:16:40
+Pull that information. So all of the… all of the data… Right now, like, the maps and the room information.
+
+[Cengiz Gunay] 15:16:49
+They're in SVG files, SVG standing for Scalable Vector Graphics, it's like a vector graphics.
+
+[Cengiz Gunay] 15:16:56
+Formats, standard format. And the second format is JSON.
+
+[Cengiz Gunay] 15:17:00
+Which is JavaScript format, right? Those are just files in the repository, and it's just right from there, like, from the web…
+
+[Brendan Morrissey] 15:17:03
+Okay.
+
+[Cengiz Gunay] 15:17:09
+The same folder that the other… files are sitting.
+
+[Cengiz Gunay] 15:17:13
+Um, and we can continue with that, because if you use React or anything like that, you can still read those files.
+
+[Brendan Morrissey] 15:17:19
+Mm-hmm. Okay.
+
+[Karen Armendariz] 15:17:27
+So, um… do we want to add advanced features, like the indoor positioning?
+
+[Karen Armendariz] 15:17:34
+Um, or do we want that for something later? We just want this to be a static.
+
+[Karen Armendariz] 15:17:40
+Um. Nap.
+
+[Cengiz Gunay] 15:17:42
+I don't want indoor positioning. So, here's the thing. If you guys have ambitions, you want to do something interesting and different.
+
+[Karen Armendariz] 15:17:45
+No positioning.
+
+[Cengiz Gunay] 15:17:50
+You are free to do so, but not within this app.
+
+[Cengiz Gunay] 15:17:53
+What I would like from you guys is a very base app.
+
+[Cengiz Gunay] 15:17:56
+That can do the job… get the job done. But what could work for you is that if we have a plugin system.
+
+[Cengiz Gunay] 15:18:05
+And you can add plugins to this map. Then you could add your own.
+
+[Cengiz Gunay] 15:18:10
+Things that you're thinking about, like… Position language. I don't know what technology you will use, because this is not an app.
+
+[Cengiz Gunay] 15:18:17
+There's a website. So you don't have access to the positioning.
+
+[Cengiz Gunay] 15:18:24
+And indoor positioning? How do you get that to work?
+
+[Brendan Morrissey] 15:18:27
+I was just considering using GPS. Placed over a static map.
+
+[Brendan Morrissey] 15:18:33
+So that, you know, if you're in the building, you know, you would see your little blue dot over where, you know.
+
+[Cengiz Gunay] 15:18:33
+Let's do that. So the…
+
+[Brendan Morrissey] 15:18:38
+Generally, you are, and…
+
+[Cengiz Gunay] 15:18:40
+That would be nice to have, um… And I think I… we had another web app recently, which we got it to work, the Trails app.
+
+[Cengiz Gunay] 15:18:49
+Walking trails? And that one, we got the location to work, but um…
+
+[Brendan Morrissey] 15:18:50
+Mm-hmm.
+
+[Cengiz Gunay] 15:18:55
+It's not as nice as when you have an app running, this is… because this is not an app, right? This is just a web… web app.
+
+[Brendan Morrissey] 15:19:01
+Right. Yeah, I just, from experience working in the DM lab, the amount of people that come in and ask me exactly where a room is.
+
+[Cengiz Gunay] 15:19:08
+Yeah.
+
+[Brendan Morrissey] 15:19:09
+And trying to, you know, describe it to them, you know, so I figured, you know.
+
+[Brendan Morrissey] 15:19:12
+Type in a room, you know, have the room pop up, and then… you know, maybe put a static line, you know, with their position they could follow.
+
+[Cengiz Gunay] 15:19:18
+Right. So… Yeah, I mean, if you have good ideas, we can discuss, um…
+
+[Cengiz Gunay] 15:19:25
+Different approaches to this. Like, one… another approach… For this to be really viable is…
+
+[Cengiz Gunay] 15:19:31
+To build in, like, separate… separate projects, like, one project could be just an API.
+
+[Cengiz Gunay] 15:19:39
+It could be just an API that gives the location information.
+
+[Cengiz Gunay] 15:19:42
+To other apps, and then you could build an app that has.
+
+[Cengiz Gunay] 15:19:46
+Gps positioning, right? Just using that, all that information. Oh, here you are.
+
+[Karen Armendariz] 15:19:55
+Okay, um… Great. Um…
+
+[Karen Armendariz] 15:20:04
+Well, yeah, um, then there was another question about, um, accessibility.
+
+[Karen Armendariz] 15:20:09
+Um, wheelchair-friendly paths. Um, would you like that to be included on this?
+
+[Karen Armendariz] 15:20:14
+Uh, Matt, on… I'm… don't think it's currently… on the maps.
+
+[Brendan Morrissey] 15:20:21
+Yeah, I think as of right now, it's just the fire escapes, and then, uh…
+
+[Cengiz Gunay] 15:20:25
+We have fire skips, yeah, and we have, um… vending machines.
+
+[Brendan Morrissey] 15:20:29
+The vending machines, and even, like, fire extinguishers and stuff, I saw that.
+
+[Cengiz Gunay] 15:20:33
+And I think there's also the… well, did we have the escape route? No, we didn't, right? We didn't have that.
+
+[Brendan Morrissey] 15:20:38
+Just the fire one.
+
+[Karen Armendariz] 15:20:42
+So would we like to add those to this?
+
+[Cengiz Gunay] 15:20:46
+What does wheelchair access… I mean, like…
+
+[Brendan Morrissey] 15:20:49
+I think it's just anywhere where ramps. Ramps, not stairs leading to elevators.
+
+[Karen Armendariz] 15:20:58
+For anyone needing accessibility, or having accessibility issues.
+
+[Cengiz Gunay] 15:21:02
+So, do we have that information? Are you guys gonna go around campus and… get, um, like, figured it out, basically.
+
+[Brendan Morrissey] 15:21:11
+Yeah, I mean, I'm on campus 4 days a week, so… It's not a problem for me.
+
+[Cengiz Gunay] 15:21:14
+Okay, so accessibility… So that will be… an overlay that's showing…
+
+[Cengiz Gunay] 15:21:24
+Wheelchair access, uh, pathways.
+
+[Karen Armendariz] 15:21:29
+Okay.
+
+[Cengiz Gunay] 15:21:31
+What you guys are planning? Or you wanna…
+
+[Brendan Morrissey] 15:21:34
+Yeah, kind of, kind of, you know, the same thing as the… the overlay for the fire escapes.
+
+[Brendan Morrissey] 15:21:41
+On the current app.
+
+[Cengiz Gunay] 15:21:41
+Mm-hmm. Who… you…
+
+[Cengiz Gunay] 15:21:47
+You would be adding the elevators, and… entrance points that are…
+
+[Cengiz Gunay] 15:21:54
+Wheelchair accessible? But I think all of the entrances…
+
+[Brendan Morrissey] 15:22:02
+I actually… now that I'm thinking about it, even the ones that do have stairs also… typically have a side ramp.
+
+[Cengiz Gunay] 15:22:08
+They also have the fun… Right. So I think we have it almost everywhere, but…
+
+[Brendan Morrissey] 15:22:15
+Yeah, that's a good point. I didn't really, uh… visualize that before throwing that question down.
+
+[Cengiz Gunay] 15:22:20
+I think, related to that, like. So that's probably, like, not so informative, right?
+
+[Cengiz Gunay] 15:22:26
+But, uh, elevator locations, I don't think we have the elevators marked, do we?
+
+[Cengiz Gunay] 15:22:31
+And, uh, did you see maps?
+
+[Cengiz Gunay] 15:22:37
+We have the restrooms marked as… I'm looking at the wrong building, because building A doesn't have.
+
+[Cengiz Gunay] 15:22:44
+Building the… oh, they do have elevators marked.
+
+[Brendan Morrissey] 15:22:46
+Ah, yeah.
+
+[Cengiz Gunay] 15:22:51
+Let's look at W.
+
+[Cengiz Gunay] 15:22:57
+You have to have elevators. I mean, navigation is a whole other thing, so…
+
+[Karen Armendariz] 15:23:13
+So for the finished product. Um, what would you like…
+
+[Karen Armendariz] 15:23:18
+It to… to be… At the end of the semester, what would you like to see it?
+
+[Karen Armendariz] 15:23:24
+B, uh, how… what kind of features would you like to see it have?
+
+[Karen Armendariz] 15:23:28
+That it doesn't currently have. Nothing.
+
+[Cengiz Gunay] 15:23:30
+Nothing. Just the same thing in a different format.
+
+[Brendan Morrissey] 15:23:33
+Okay, so it's just. Recreated, new framework, okay.
+
+[Cengiz Gunay] 15:23:38
+Yeah. Yeah, but if you guys want to add some features.
+
+[Brendan Morrissey] 15:23:38
+Or a framework.
+
+[Cengiz Gunay] 15:23:43
+We can discuss about that, yeah? Something that makes sense. And also, like, think about if we can provide an API, like.
+
+[Brendan Morrissey] 15:23:44
+Okay.
+
+[Cengiz Gunay] 15:23:49
+If you can break this app into two pieces. So that is easily…
+
+[Cengiz Gunay] 15:23:57
+Extensible in the future. Like, I was either thinking, like, on a plug-in system that you can have a main app and then have some kind of a plugin system where you can.
+
+[Cengiz Gunay] 15:24:05
+Add things to it, or if it's an API, then you can have any app pull that data from the API.
+
+[Cengiz Gunay] 15:24:12
+And they show it in a different way. And then you can have all kinds of navigation and other things.
+
+[Cengiz Gunay] 15:24:18
+Built on it.
+
+[Karen Armendariz] 15:24:25
+So, okay. Would we, um… I guess at this point, just want it to be.
+
+[Brendan Morrissey] 15:24:26
+Okay.
+
+[Karen Armendariz] 15:24:33
+We wouldn't want a multi-language. Support.
+
+[Cengiz Gunay] 15:24:36
+You could, yeah, you could have all of those things. But… wait, there's no language in here. It's like…
+
+[Karen Armendariz] 15:24:38
+Okay.
+
+[Cengiz Gunay] 15:24:44
+Only the legend has language, I think.
+
+[Karen Armendariz] 15:24:45
+Right, but the legend, if you could… switch it to a different language.
+
+[Cengiz Gunay] 15:24:56
+I don't mind if you want to do that, but… It doesn't sound like a big job, yeah.
+
+[Karen Armendariz] 15:25:01
+Okay.
+
+[Cengiz Gunay] 15:25:03
+Those ideas.
+
+[Karen Armendariz] 15:25:07
+So, the platforms, um… Do you have any preference?
+
+[Karen Armendariz] 15:25:15
+For any of the platforms we should use. First… Yes, for first, yeah, would there be…
+
+[Cengiz Gunay] 15:25:18
+You mean, framework?
+
+[Cengiz Gunay] 15:25:24
+I mean, React is fine if you guys want to use that, but there's… there are other things out there. There's Vue.js.
+
+[Cengiz Gunay] 15:25:33
+And there's a couple of other things. It's totally up to you, like, maybe, like, you can…
+
+[Cengiz Gunay] 15:25:39
+Do some research on that, and see, like. If there's something a bit more…
+
+[Cengiz Gunay] 15:25:44
+Helpful for, like, doing vector graphics. For example, if you use something like…
+
+[Cengiz Gunay] 15:25:50
+There are some game, um… game and graphics libraries in JavaScript.
+
+[Cengiz Gunay] 15:25:56
+That makes it really easy to draw things, right? So you could use something like that.
+
+[Cengiz Gunay] 15:26:01
+But what they have so far, like, the way they built this app, which was really impressive, and I really like the way they did it.
+
+[Cengiz Gunay] 15:26:08
+They made it really simple to display all of those maps. The maps are in SVG format, you just grab them.
+
+[Cengiz Gunay] 15:26:13
+And they're… can activate, like, different… when you click on something, it activates, right? It becomes yellow.
+
+[Cengiz Gunay] 15:26:20
+If you click on the rooms… Those are just built into the SVG, and with just a little bit of JavaScript, you can do that.
+
+[Brendan Morrissey] 15:26:29
+So I looked at the code a little bit. I mean, did they just… I mean… I guess… how do they get it?
+
+[Brendan Morrissey] 15:26:37
+Did they make these just… like, objects that are clickable, that lead, like, link to the SVGs?
+
+[Cengiz Gunay] 15:26:44
+No, no, no, the whole thing is one SVG, the whole map is an SVG.
+
+[Brendan Morrissey] 15:26:48
+Ah, okay.
+
+[Cengiz Gunay] 15:26:48
+But they can find the rooms, because there's code inside this feature they can search through.
+
+[Cengiz Gunay] 15:26:53
+By using HTML selectors. So, like, each room is tagged, so you find the room, and then you can change its colors.
+
+[Brendan Morrissey] 15:26:55
+Okay.
+
+[Brendan Morrissey] 15:27:02
+Okay.
+
+[Cengiz Gunay] 15:27:12
+Yeah, I think it will be very interesting if you guys… Yeah, can't separate…
+
+[Cengiz Gunay] 15:27:19
+The back, like, the data from the actual front end? Or have a plugin system. Yeah, again, I'm repeating myself at this point, but yeah.
+
+[Cengiz Gunay] 15:27:27
+I'm looking for ideas, um, and… whatever you guys can do, right? Because you have to learn things, right? Do you guys… Brandon, have you worked with React before.
+
+[Karen Armendariz] 15:27:33
+Right. I'm…
+
+[Brendan Morrissey] 15:27:35
+I have, I have. A little bit.
+
+[Cengiz Gunay] 15:27:39
+Karen, you haven't? Yeah, so it's going to be learning… learning curve for you guys, and…
+
+[Karen Armendariz] 15:27:40
+I have not. No.
+
+[Brendan Morrissey] 15:27:42
+I think…
+
+[Cengiz Gunay] 15:27:45
+I am curious to see what you can come up with.
+
+[Brendan Morrissey] 15:27:49
+Yeah, I mean, I think React would be good, especially using the state.
+
+[Karen Armendariz] 15:27:49
+All right.
+
+[Brendan Morrissey] 15:27:53
+Using state and React. Of the map, uh-huh.
+
+[Cengiz Gunay] 15:27:59
+The maps don't change.
+
+[Brendan Morrissey] 15:28:01
+I mean, like, when… I guess for the external map… you know, when you click on a building, and it… brings you to the indoor view.
+
+[Brendan Morrissey] 15:28:10
+I don't know, I'm just… it's been a while since I used React.
+
+[Cengiz Gunay] 15:28:14
+Right, and… One thing that was missing from this GGC map is, like, the location, like, where you are, right?
+
+[Brendan Morrissey] 15:28:21
+Mm-hmm.
+
+[Cengiz Gunay] 15:28:22
+So that's kind of missing, so if you can… get the location, and somehow show that. For example, when you zoomed into a building.
+
+[Cengiz Gunay] 15:28:30
+For the B building, for example, where in that building you are, right? So there's… Not showing which entrance you're from, coming from.
+
+[Cengiz Gunay] 15:28:38
+Also, like, if you're on campus, you're going from point A to point B.
+
+[Cengiz Gunay] 15:28:43
+Um, let me actually share my screen.
+
+[Cengiz Gunay] 15:28:54
+So you're going from Building C. To another building, right?
+
+[Cengiz Gunay] 15:29:00
+Going from building C to Building A. Like, it doesn't show you, like, which exit you need to exit from, and the shape of the building doesn't…
+
+[Cengiz Gunay] 15:29:09
+Always match how it looks like on the map. Right? This is, like, slanted.
+
+[Cengiz Gunay] 15:29:14
+And when you click on it, it actually becomes… straight. So, it doesn't give you, like, a path to go from one building to another building, right?
+
+[Brendan Morrissey] 15:29:24
+Mm-hmm.
+
+[Cengiz Gunay] 15:29:26
+So where are you going to enter from, and how are you going to go? So, we don't have any navigation built into this, so.
+
+[Cengiz Gunay] 15:29:32
+You guys have any ideas for navigation that that could be… That could be interesting as well.
+
+[Brendan Morrissey] 15:29:41
+Yeah, I didn't… oh, go ahead. No, no, no, go ahead.
+
+[Karen Armendariz] 15:29:41
+Accessibility concept. Has there been any new buildings added since these maps were done?
+
+[Cengiz Gunay] 15:29:48
+I'm pretty sure there were changes, like, every year there are changes on campus. The W building is not.
+
+[Cengiz Gunay] 15:29:55
+The correct shape, for example, is it? Let's see… so it looks like a flat shape, but it's actually… it's L-shaped.
+
+[Cengiz Gunay] 15:30:06
+Um, but I think inside, W is kind of correct, let's see, let's look at floor 2.
+
+[Cengiz Gunay] 15:30:13
+So this is the correct… size of… there's a…
+
+[Cengiz Gunay] 15:30:18
+There's a connector in here from… W2C… see, they are not connected, right? You don't go from one building to another. There could be, like, an arrow in here saying that click.
+
+[Cengiz Gunay] 15:30:27
+Here to go to sea or something, right? So those things are kind of not there.
+
+[Karen Armendariz] 15:30:30
+So, is there anywhere we can, um. Get the actual… I don't know how they did…
+
+[Karen Armendariz] 15:30:39
+These numbers, the room numbers and the shape of the building.
+
+[Karen Armendariz] 15:30:44
+Did they just… take that off of… Google Earth Search!
+
+[Cengiz Gunay] 15:30:48
+No. No, they did not. The hardest part of this project, and lots of student hours went to this, is drawing these things by hand.
+
+[Karen Armendariz] 15:30:51
+Okay.
+
+[Cengiz Gunay] 15:31:00
+I mean, actually, like, measuring them and drawing them. We did all of this. All of this is student work.
+
+[Karen Armendariz] 15:31:03
+Okay. Yeah.
+
+[Cengiz Gunay] 15:31:05
+None of it is from anywhere. They got no help. The only people who helped them was the… police chief, they helped with some, um.
+
+[Cengiz Gunay] 15:31:15
+I think one of… some of the buildings that are, like, off… off-limits, they were… the D-building and stuff. For example, the police building is grayed out.
+
+[Karen Armendariz] 15:31:19
+So the grayed-out places have to remain grayed out. Okay.
+
+[Cengiz Gunay] 15:31:24
+And the day building, certain areas are grayed out, so those are, like, secure areas. So we got, actually.
+
+[Cengiz Gunay] 15:31:29
+Review by the campus police, and we were told to do this and not to do that and stuff.
+
+[Cengiz Gunay] 15:31:34
+So they were helping us, but no one else on campus helped us.
+
+[Cengiz Gunay] 15:31:40
+Correct. And you may want to contact the GGC campus police and to get a review from them.
+
+[Cengiz Gunay] 15:31:48
+Especially for new stuff you're adding. So I think we don't have the new building? Wait.
+
+[Cengiz Gunay] 15:31:56
+Is this the new building? Well, they have… they marked it in here, wow, I didn't realize this.
+
+[Cengiz Gunay] 15:32:01
+When did they do this? But yeah, whatever's in that convocation center.
+
+[Cengiz Gunay] 15:32:05
+May need to be marked, if there's something that we need to access.
+
+[Cengiz Gunay] 15:32:13
+I know that they change rooms everywhere continuously, so some rooms may not exist anymore.
+
+[Cengiz Gunay] 15:32:20
+I think, like, they changed these rooms… But they look updated, actually. This looks like the new one.
+
+[Karen Armendariz] 15:32:30
+So would you expect those rooms to be updated, or…? The way they are is… acceptable?
+
+[Cengiz Gunay] 15:32:31
+Yeah.
+
+[Cengiz Gunay] 15:32:38
+I don't know if these are correct. So maybe you will need to check them.
+
+[Karen Armendariz] 15:32:40
+Okay.
+
+[Cengiz Gunay] 15:32:46
+I don't know what has changed in the last year or so.
+
+[Cengiz Gunay] 15:32:52
+These things look right to me. Oh, in W, we had the new…
+
+[Cengiz Gunay] 15:33:05
+Dang, these are… The outside shape of the room did not change, I think, so it's still the same thing.
+
+[Karen Armendariz] 15:33:12
+Okay.
+
+[Cengiz Gunay] 15:33:14
+I have to think if there were other constructions… on campus.
+
+[Cengiz Gunay] 15:33:21
+Yeah, I'm not sure. You may need to walk around and see if things are still in place.
+
+[Cengiz Gunay] 15:33:26
+If anything has changed.
+
+[Karen Armendariz] 15:33:29
+Okay, wow. Um… Yeah, I could see how that would be a ginormous.
+
+[Karen Armendariz] 15:33:34
+Undertaking to make sure… verify every room and.
+
+[Karen Armendariz] 15:33:40
+Hallway is still exactly the same as it was.
+
+[Cengiz Gunay] 15:33:43
+Probably not everything, because, like, you probably know that some stuff didn't change.
+
+[Cengiz Gunay] 15:33:53
+Are you guys from… do you guys remember anything that was happening on campus? I know the convocation center was a big one.
+
+[Karen Armendariz] 15:34:01
+Yeah, I'm online only, so I… I've not been on campus but once.
+
+[Cengiz Gunay] 15:34:10
+So, I don't know how this project's gonna work for you, Karen.
+
+[Karen Armendariz] 15:34:14
+I'll have to rely on my teammates who are on campus, perhaps, to.
+
+[Karen Armendariz] 15:34:21
+Um… fill in the gaps as best we can.
+
+[Karen Armendariz] 15:34:27
+Um, hopefully, um… I guess we should focus on getting this… the framework done.
+
+[Karen Armendariz] 15:34:33
+So that in the future, they can be updated. Um, as new buildings.
+
+[Karen Armendariz] 15:34:43
+Are built, and… Solar plans change.
+
+[Karen Armendariz] 15:34:48
+Because you never know when that's going to happen anyway, so… that's something we'll have to build into it.
+
+[Cengiz Gunay] 15:34:55
+Um, yeah, I don't know how you will change that, because, like, again, like, the whole thing is based on SVG files.
+
+[Cengiz Gunay] 15:35:02
+So they're, like, vector graphics files that you have to edit, and you can just add buildings onto them.
+
+[Cengiz Gunay] 15:35:09
+Um. Yeah, I don't know if that should be changed or not.
+
+[Karen Armendariz] 15:35:17
+Which part? Oh.
+
+[Cengiz Gunay] 15:35:19
+Being able to add buildings.
+
+[Cengiz Gunay] 15:35:25
+Because that means, like, you need to come up with a new system instead of using SVG files.
+
+[Karen Armendariz] 15:35:34
+Yes? Unless we… find… yeah, unless we find a way to do it.
+
+[Cengiz Gunay] 15:35:41
+Yeah, I mean, if there's a way, yeah. We could ask the media, maybe they know.
+
+[Karen Armendariz] 15:35:42
+Um…
+
+[Karen Armendariz] 15:35:47
+Well.
+
+[Brendan Morrissey] 15:35:47
+Because, yeah, for each building, they have to, you know, custom build that code for the SVG.
+
+[Brendan Morrissey] 15:35:52
+Right? For every, like, noon… like, if the…
+
+[Cengiz Gunay] 15:35:54
+Well, there was a process for it. I don't know if you guys were told, or if… there should be some documentation… let's see…
+
+[Brendan Morrissey] 15:36:01
+Oh, okay.
+
+[Karen Armendariz] 15:36:05
+Okay. Wow, okay. Well.
+
+[Karen Armendariz] 15:36:12
+Seems straightforward, but I know it's not… I know we're gonna have.
+
+[Karen Armendariz] 15:36:15
+More questions as things come up, but um…
+
+[Cengiz Gunay] 15:36:19
+Now, let me try to find the code for it, one second.
+
+[Cengiz Gunay] 15:37:11
+Yeah, this is definitely not the one I was looking for.
+
+[Cengiz Gunay] 15:37:15
+Do you guys have the repo? The original repo?
+
+[Brendan Morrissey] 15:37:22
+Yes, here, I'll throw it in the chat.
+
+[Cengiz Gunay] 15:37:28
+Look at this little one. This is the original one. I found it up.
+
+[Brendan Morrissey] 15:37:33
+Oh, okay.
+
+[Cengiz Gunay] 15:37:33
+Right? So here in the documentation…
+
+[Cengiz Gunay] 15:37:45
+It downloads, I think.
+
+[Cengiz Gunay] 15:37:54
+This is the documentation. Oh, there's a contributor guy, okay?
+
+[Cengiz Gunay] 15:38:03
+Found…
+
+[Cengiz Gunay] 15:38:09
+It is here, so you have to click on it.
+
+[Cengiz Gunay] 15:38:14
+Alright, let's go and pass… So they have all the stuff in here, like what they did.
+
+[Cengiz Gunay] 15:38:21
+And how you can run it, and all of that. And it's using a lot of, like, old technologies, it's using, like, Ruby SAS, Susie Grunt. None of these things are…
+
+[Cengiz Gunay] 15:38:31
+Needed anymore, and they use something called PhantomJS for something, so… That's the whole point, like, we don't want to be using these things anymore, and just use.
+
+[Cengiz Gunay] 15:38:40
+One of the widely used frameworks, like React, for example. Uh, on top of that…
+
+[Cengiz Gunay] 15:38:49
+There's a way to, like, make those files, the SVG files, they're not… Handmaids. They were using Adobe…
+
+[Cengiz Gunay] 15:38:57
+Illustrator, I think, to create them. So basically, are you traveling with your mouse and, like, or an engineering program, right? And then you export it.
+
+[Cengiz Gunay] 15:39:05
+And then you have to pass it through some. Process to make it work on the website.
+
+[Cengiz Gunay] 15:39:11
+So they did not explain that in here, so… That is not… Oh, here…
+
+[Cengiz Gunay] 15:39:33
+So you will have to talk to them. For that part.
+
+[Karen Armendariz] 15:39:37
+Okay.
+
+[Cengiz Gunay] 15:39:38
+And they can show you how to do that, and I can get you… oh, here it is.
+
+[Cengiz Gunay] 15:39:42
+If you update any of the maps, include the updated instructor files in your request, note that the Illustrator file is not to be in the repository. Attach the browser to the pull request, or link to the files.
+
+[Cengiz Gunay] 15:39:54
+We want to allow future countries to be able to use the most updated graphs.
+
+[Cengiz Gunay] 15:39:58
+So yeah, anything… yeah, anything you do, like, kind of has to pass through these people.
+
+[Cengiz Gunay] 15:40:04
+I guess, like, we're kind of going rogue, because, like, there's… Um, we're not working with them initially.
+
+[Cengiz Gunay] 15:40:19
+Interesting, these are the logos they used? Oh, these are the dining hall and stuff.
+
+[Cengiz Gunay] 15:40:28
+Okay. But the actual buildings are here. So you can't see, like, ABC the buildings. The A building is just an HTML file.
+
+[Cengiz Gunay] 15:40:40
+And inside the HTML file, it's actually an SVG. The whole thing isn't a 3G. It could have been pushed for that.
+
+[Cengiz Gunay] 15:40:47
+Svg. And there's a script at the end, through printer.
+
+[Cengiz Gunay] 15:40:58
+So this is how they find the room. So basically, like, inside the SVG, there are certain… tags that shows where they are.
+
+[Cengiz Gunay] 15:41:06
+So there's a fire out in here. No, they actually use Inkscape.
+
+[Cengiz Gunay] 15:41:16
+If we may not have your fields, Adobe Illustrator.
+
+[Cengiz Gunay] 15:41:22
+Trying to find a room to show you guys the room.
+
+[Cengiz Gunay] 15:41:41
+Be… Let me go to the beginning and see if I can find something…
+
+[Cengiz Gunay] 15:41:47
+Named view… Yeah, I'm not sure…
+
+[Cengiz Gunay] 15:41:53
+I don't remember how they did this right now. You have to look at the code.
+
+[Cengiz Gunay] 15:41:59
+But this is how they like drawing things, and there are certain IDs that tell you, like, what is what.
+
+[Cengiz Gunay] 15:42:05
+And the roofs are marked that way, so there should be, like, some markings for the rooms.
+
+[Karen Armendariz] 15:42:13
+Go and set a fire out, it would say brooms, or something of that nature.
+
+[Cengiz Gunay] 15:42:16
+Say it again?
+
+[Karen Armendariz] 15:42:18
+Instead of fire out, we were looking for rooms. Next up one.
+
+[Cengiz Gunay] 15:42:21
+Could be, something like that, yeah. So they should be marked in this file.
+
+[Cengiz Gunay] 15:42:30
+Oh, okay, let me… to the beginning.
+
+[Cengiz Gunay] 15:42:39
+Glove… I think these, these, oh, these are X…
+
+[Cengiz Gunay] 15:42:50
+I don't hear this. These are the room numbers. 1884.
+
+[Karen Armendariz] 15:42:52
+Oh, man.
+
+[Cengiz Gunay] 15:42:56
+I didn't know we had a room called 1880 in a building.
+
+[Cengiz Gunay] 15:43:00
+Okay. So these are the rules. So there are… this is as… as simple as this. It's just this… thing. And…
+
+[Cengiz Gunay] 15:43:09
+Again, like, you don't have to write these numbers by hand, you open this file in Inkscape, and then you save it.
+
+[Cengiz Gunay] 15:43:15
+But then you have to, like, paste it into HTML. So that it's, like, it's still in HTML, right? Because it says to start.
+
+[Cengiz Gunay] 15:43:23
+With these things, and at the very bottom, there should be some script or something.
+
+[Cengiz Gunay] 15:43:27
+So maybe, like, if you can simplify these things, that could be an improvement.
+
+[Cengiz Gunay] 15:43:33
+But, like, it's easier to edit these things somehow. Maybe, like, there's an online tool you can use, you click on an SVG, you can draw on it, and it can.
+
+[Cengiz Gunay] 15:43:42
+Automatically update this, or something like that. So those could be welcome…
+
+[Cengiz Gunay] 15:43:50
+Changes to this project.
+
+[Karen Armendariz] 15:44:01
+That's all the questions I have. And then, anything?
+
+[Cengiz Gunay] 15:44:03
+Okay.
+
+[Karen Armendariz] 15:44:07
+Else…
+
+[Brendan Morrissey] 15:44:08
+Uh, at the moment, no. Um, because I was just kind of… today, this morning was actually the first time I looked at the code. I got invited to the group.
+
+[Cengiz Gunay] 15:44:18
+Right.
+
+[Brendan Morrissey] 15:44:18
+So, um… I think by the end of next week, after we meet with our other two group members too.
+
+[Brendan Morrissey] 15:44:25
+We'll be able to come up with some more valuable questions.
+
+[Cengiz Gunay] 15:44:29
+Mm-hmm. All right, well, nice to meet you both. I mean, I knew Brent, yeah.
+
+[Karen Armendariz] 15:44:31
+Yes.
+
+[Karen Armendariz] 15:44:35
+Yes, sir, nice to meet you. Appreciate your time very much.
+
+[Cengiz Gunay] 15:44:38
+Mm-hmm.
+
+[Brendan Morrissey] 15:44:39
+Yeah, thanks, Zacharina.
+
+[Karen Armendariz] 15:44:39
+You know, publicly bubble. So, um, we thank you for that, and I know we're gonna have more questions for you. Um, is it best just to email you?
+
+[Cengiz Gunay] 15:44:47
+Yes, email, or I'm also on Discord, and yeah, just let me know if you want to meet again, or you have.
+
+[Cengiz Gunay] 15:44:54
+Maybe sometimes you don't have a… you don't have to meet, you can just tell me what you're up to, you can ask me a question, and yeah.
+
+[Karen Armendariz] 15:44:59
+Right. Okay, that sounds great. Well, thank you so much, I appreciate it.
+
+[Cengiz Gunay] 15:45:04
+Yeah, every nice week in the booth. Ah, they're true.
+
+[Karen Armendariz] 15:45:06
+Yeah. Have fun.
+
+[Brendan Morrissey] 15:45:06
+Oh, and I'll see you on Thursdays, so…
+
+[Karen Armendariz] 15:45:10
+Okay, have a good day! Faces…
+
+[Brendan Morrissey] 15:45:11
+Alright, see ya.
+
+[Cengiz Gunay] 15:45:11
+Right.
+
