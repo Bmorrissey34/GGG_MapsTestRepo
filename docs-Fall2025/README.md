@@ -54,6 +54,9 @@ TBD (to be determined as development progresses)
 #### Justin McCabe
 - UI/UX Designer
 - Project Manager
+#### William Stein
+- :construction: Data Modeling
+- :bookmark_tabs: Documentation Lead
 
 ### Project Flyer and video (at the end of the semester)
 
