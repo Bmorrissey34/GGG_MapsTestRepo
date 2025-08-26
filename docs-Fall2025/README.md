@@ -40,12 +40,14 @@ TBD (to be determined as development progresses)
 
 **Team Name:** *Lost* 
 
-| Name              | Roles & Responsibilities                                                                 | Contribution % |
-|-------------------|-------------------------------------------------------------------------------------------|----------------|
-| **Brendan Morrissey** | Code Architecture / Lead Programmer (60%) · Programmer (20% ×2)                        | 100% |
-| **William Stein**     | Data Modeling (60%) · Documentation Lead (20%) · Programmer (20%)                     | 100% |
-| **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%)                          | 100% |
-| **Justin McCabe**     | UI/UX Designer (60%) · Team Manager / Project Manager (20%) · Programmer (20%)        | 100% |
+### Team Members  
+
+| Photo | Name              | Roles & Responsibilities                                                                 | Contribution % |
+|-------|-------------------|-------------------------------------------------------------------------------------------|----------------|
+| ![Brendan](images/team/brendan.jpg) | **Brendan Morrissey** | Code Architecture / Lead Programmer (60%) · Programmer (20% ×2) | 100% |
+| ![William](images/team/will.jpg)    | **William Stein**     | Data Modeling (60%) · Documentation Lead (20%) · Programmer (20%) | 100% |
+| ![Karen](images/team/karen.jpg)     | **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%) | 100% |
+| ![Justin](images/team/justin.jpg)   | **Justin McCabe**     | UI/UX Designer (60%) · Project Manager (20%) · Programmer (20%) | 100% |
 
 
 
