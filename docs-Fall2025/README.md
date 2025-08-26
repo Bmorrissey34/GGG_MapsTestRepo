@@ -55,4 +55,6 @@ TBD (to be determined as development progresses)
 - UI/UX Designer
 - Project Manager
 
+### Project Flyer and video (at the end of the semester)
+
 
