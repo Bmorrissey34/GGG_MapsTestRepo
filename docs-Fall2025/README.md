@@ -1,88 +1,53 @@
 
-# SustainabilityWebsite.
+# GGCMaps - 8/25/2025
 
-## Team Avengers
+## Team Lot
 
 ### Description / Abstract
-  - This project is on a website that was made for the Sustainability Committee in order to allow users to take a pledge in personal consumption of electricity, water,      recylcing and transportation. With a small contribution on the pledge can help and change the world for the
-    better.
+  - The GGC Maps Project is a web-based tool that helps students, visitors, and staff navigate Georgia Gwinnett College’s campus. It rebuilds the legacy GGC Maps app using a modern framework to ensure responsiveness, accessibility, and easier maintenance. The new system will reuse existing SVG floorplans and JSON data while adding support for modular plug-ins, making it extensible for future features. The project’s primary objective is to deliver a clean, maintainable, and future-proof mapping solution for GGC.
 
-### Demonstration Video
- - Spring 2020[**click here**](https://www.youtube.com/watch?v=VRr0vG4C6y8&feature=youtu.be)
- - Fall 2020[**click here**](https://www.youtube.com/watch?v=a9Ixflzd_Ko&feature=emb_logo)
+### Links
+ - The [legacy GGC Maps project](http://ggcmaps.com/#Campus) is available for reference, but this repository focuses on rebuilding it with modern frameworks and a modular design.
 
-### Features
-- Login Page
-- FAQ Page
-- About us Page
-- Statistics Page
-- Reactive Pages
-- navigation
-- Pages to Environmental Clubs / Donations Page
+### Technologies
+- JavaScript framework (Next.js, React or Vue.js – pending final decision)
+- HTML5 / CSS3 for layout and styling
+- SVG for scalable building maps
+- JSON for room and building metadata
+- GitHub for version control and collaboration
 
-### Technologies Used
- - Angular 9
- - Firebase CLI
- - Bootstrap
- - Selenium
+### Working Features
+- Display of campus buildings and indoor maps (from SVG files)
+- Clickable rooms and spaces with highlights
+- Search by room number or building
+- Overlay features (e.g., fire escapes, elevators, vending machines)
+- Modular plugin system for future extensions (e.g., accessibility overlays, GPS integration) 
 
-### Installations
-- firebase, javascript, and typescript runs the back end and database of the website
-- Angular 9 and Bootstrap 4 is what we are using for the website
-- we used npm installs to add angular dependencies on the command line
-- we used HTML5 for the front end of the website
-- we used git clone to clone the projects to our local repo
-- we used git add/commit/push after everything was running in the project smoothly
+### Installation Steps
 
-### How To Run
-1. add user name and a password
-2. click on "sign-up" the first time
-3. click on the big "Start the Pledge" button
-4. take the pledge and answer all the questions before submission.
-5. see your results
-6. explore
-7. signout
+
+### Running Steps
+
+
+### Other Project Explanations
+- Client: Dr. Cengiz Gunay, Georgia Gwinnett College
+- Goal: Rebuild the existing GGC Maps app in a modern, modular, and maintainable way
+- Future Enhancements (optional): multilingual support, GPS positioning, campus navigation between buildings, accessibility overlays
+
 
 ### Team Roles
 
-##### Spring 2020
-* **Chris Martinez**
-1. _UI/UX design_ :crossed_swords:
-2. _Client Laison_ :tokyo_tower:
+### Team Members  
+**Team Name:** *Team Lost* 
 
-* **David Mercado**
-1. _Data Modeler_ :surfer:
-2. _Documentation Lead and Testing Lead_ :bookmark_tabs: :squirrel:
+Fall-2025
 
-* **Denzel Gomez**
-1. _Code architecture/lead programmer_ :hammer:
-2. _Team manager_ :santa: :gift:
+| Name              | Roles & Responsibilities                                                                 | Contribution % |
+|-------------------|-------------------------------------------------------------------------------------------|----------------|
+| **Brendan Morrissey** | Code Architecture / Lead Programmer (60%) · Programmer (20% ×2)                        | 100% |
+| **William Stein**     | Data Modeling (60%) · Documentation Lead (20%) · Programmer (20%)                     | 100% |
+| **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%)                          | 100% |
+| **Justin McCabe**     | UI/UX Designer (60%) · Team Manager / Project Manager (20%) · Programmer (20%)        | 100% |
 
-##### Fall 2020
-* **Angel Mercado**
-1. _Data Modeler_ :ballot_box:
-2. _Documentation_ 	:bookmark_tabs:
 
-* **Cesar Lopez**
-1. _Code Architecture/Lead Programmer_ :bird:
-2. _Documentation_ :rocket:
 
-* **Trevor Lee**
-1. _Testing_
-2. _Team Manager_
-
-* **Jonathan Roof**
-1. _UX/UI Lead_
-2. _Client Liaison_
-
-### Flyer
-- [**click here**](https://d1b10bmlvqabco.cloudfront.net/attach/k508k7w18w11xp/jqk0qn8fcs075r/k98q7cevb540/UntitledArtwork_1.pdf)
-
-###  Repo Location
-  - [**click here**](https://github.com/GGC-SD/SustainabilityWebsite)
-
-###  Progress Tracking Tools
-  - Jira
-
-###   Communication Tools
-  - Discord
