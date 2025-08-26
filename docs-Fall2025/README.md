@@ -51,7 +51,7 @@ TBD (to be determined as development progresses)
 
 ### Team Roles 
 
-###### Justin McCabe
+#### Justin McCabe
 - UI/UX Designer
 - Project Manager
 
