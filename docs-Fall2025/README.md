@@ -58,6 +58,11 @@ TBD (to be determined as development progresses)
 - :construction: Data Modeling
 - :bookmark_tabs: Documentation Lead
 
+#### Karen Armendariz
+- Testing Lead
+- Client Liaison
+- Programmer
+
 ### Project Flyer and video (at the end of the semester)
 
 
