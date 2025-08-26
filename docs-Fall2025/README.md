@@ -24,10 +24,10 @@
 - Modular plugin system for future extensions (e.g., accessibility overlays, GPS integration) 
 
 ### Installation Steps
-
+TBD (to be determined as development progresses)  
 
 ### Running Steps
-
+TBD (to be determined as development progresses)  
 
 ### Other Project Explanations
 - Client: Dr. Cengiz Gunay, Georgia Gwinnett College
@@ -35,12 +35,10 @@
 - Future Enhancements (optional): multilingual support, GPS positioning, campus navigation between buildings, accessibility overlays
 
 
-### Team Roles
-
 ### Team Members  
-**Team Name:** *Team Lost* 
+**Fall-2025**
 
-Fall-2025
+**Team Name:** *Lost* 
 
 | Name              | Roles & Responsibilities                                                                 | Contribution % |
 |-------------------|-------------------------------------------------------------------------------------------|----------------|
