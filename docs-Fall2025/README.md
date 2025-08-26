@@ -1,7 +1,7 @@
 
 # GGCMaps - 8/25/2025
 
-## Team Lot
+## Team Lost
 
 ### Description / Abstract
   - The GGC Maps Project is a web-based tool that helps students, visitors, and staff navigate Georgia Gwinnett College’s campus. It rebuilds the legacy GGC Maps app using a modern framework to ensure responsiveness, accessibility, and easier maintenance. The new system will reuse existing SVG floorplans and JSON data while adding support for modular plug-ins, making it extensible for future features. The project’s primary objective is to deliver a clean, maintainable, and future-proof mapping solution for GGC.
