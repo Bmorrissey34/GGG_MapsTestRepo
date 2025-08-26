@@ -46,7 +46,7 @@ TBD (to be determined as development progresses)
 |-------|-------------------|-------------------------------------------------------------------------------------------|----------------|
 | ![Brendan](images/brendan.jpg) | **Brendan Morrissey** | Code Architecture / Lead Programmer (60%) · Programmer (20% ×2) | 100% |
 | ![William](images/will.jpg)    | **William Stein**     | Data Modeling (60%) · Documentation Lead (20%) · Programmer (20%) | 100% |
-| ![Karen](images/KPicture.jpg)     | **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%) | 100% |
+| ![Karen](images/karen.jpg)     | **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%) | 100% |
 | ![Justin](images/justin.jpg)   | **Justin McCabe**     | UI/UX Designer (60%) · Project Manager (20%) · Programmer (20%) | 100% |
 
 ### Team Roles 
