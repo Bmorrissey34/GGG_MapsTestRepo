@@ -49,5 +49,10 @@ TBD (to be determined as development progresses)
 | ![Karen](images/team/karen.jpg)     | **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%) | 100% |
 | ![Justin](images/team/justin.jpg)   | **Justin McCabe**     | UI/UX Designer (60%) · Project Manager (20%) · Programmer (20%) | 100% |
 
+### Team Roles 
+
+###### Justin McCabe
+- UI/UX Designer
+- Project Manager
 
 
