@@ -70,5 +70,7 @@
 - Programmer
 
 ### Project Flyer and video (at the end of the semester)
+This project is awesome 🚀🔥
+
 
 
