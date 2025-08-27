@@ -69,6 +69,10 @@
 - Client Liaison
 - Programmer
 
+#### Brendan Morrissey
+-Lead Programmer
+-Code Architecture
+
 ### Project Flyer and video (at the end of the semester)
 This project is awesome 🚀🔥
 
