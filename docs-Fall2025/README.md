@@ -10,7 +10,7 @@
  - The [legacy GGC Maps project](http://ggcmaps.com/#Campus) is available for reference, but this repository focuses on rebuilding it with modern frameworks and a modular design.
 
 ### Technologies
-- JavaScript framework (Next.js, React or Vue.js – pending final decision)
+- Next.js with TypeScript
 - HTML5 / CSS3 for layout and styling
 - SVG for scalable building maps
 - JSON for room and building metadata
@@ -24,10 +24,12 @@
 - Modular plugin system for future extensions (e.g., accessibility overlays, GPS integration) 
 
 ### Installation Steps
-TBD (to be determined as development progresses)  
+1. Clone the repository
+2. Run `npm install`
 
 ### Running Steps
-TBD (to be determined as development progresses)  
+1. Run `npm run dev`
+2. Open http://localhost:3000
 
 ### Other Project Explanations
 - Client: Dr. Cengiz Gunay, Georgia Gwinnett College
