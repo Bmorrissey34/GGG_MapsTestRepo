@@ -21,7 +21,11 @@
 - Clickable rooms and spaces with highlights
 - Search by room number or building
 - Overlay features (e.g., fire escapes, elevators, vending machines)
-- Modular plugin system for future extensions (e.g., accessibility overlays, GPS integration) 
+- Modular plugin system for future extensions (e.g., accessibility overlays, GPS integration)
+
+### Prerequisites
+- Node.js 18.17 or newer (20.x LTS recommended)
+- npm (comes with Node)
 
 ### Installation Steps
 1. Clone the repository
