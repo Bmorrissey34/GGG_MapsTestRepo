@@ -50,10 +50,10 @@
 
 | Photo | Name              | Roles & Responsibilities                                                                 | Contribution % |
 |-------|-------------------|-------------------------------------------------------------------------------------------|----------------|
-| ![Brendan](../web/public/images/BrendanM.jpg) | **Brendan Morrissey** | Code Architecture / Lead Programmer (60%) · Programmer (20% ×2) | 100% |
-| ![William](../web/public/images/will.jpg)    | **William Stein**     | Data Modeling (60%) · Documentation Lead (20%) · Programmer (20%) | 100% |
-| ![Karen](../web/public/images/karen.jpg)     | **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%) | 100% |
-| ![Justin](../web/public/images/justin.jpg)   | **Justin McCabe**     | UI/UX Designer (60%) · Project Manager (20%) · Programmer (20%) | 100% |
+| ![Brendan](../web/public/images/BrendanM.jpg) | **Brendan Morrissey** | Code Architecture / Lead Programmer (60%) · Programmer (20% ×2)   | 100% |
+| ![William](../web/public/images/will.jpg)     | **William Stein**     | Data Modeling (60%) · Documentation Lead (20%) · Programmer (20%) | 100% |
+| ![Karen](../web/public/images/karen.jpg)      | **Karen Armendariz**  | Testing Lead (60%) · Client Liaison (20%) · Programmer (20%)      | 100% |
+| ![Justin](../web/public/images/justin.jpg)    | **Justin McCabe**     | UI/UX Designer (60%) · Project Manager (20%) · Programmer (20%)   | 100% |
 
 ### Team Roles 
 
