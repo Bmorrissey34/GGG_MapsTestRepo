@@ -61,8 +61,8 @@
 - UI/UX Designer
 - Project Manager
 #### William Stein
-- construction: Data Modeling
-- bookmark_tabs: Documentation Lead
+- Data Modeling
+- Documentation Lead
 
 #### Karen Armendariz
 - Testing Lead
