@@ -1,0 +1,47 @@
+Imported assets and docs from old repo (essential-only):
+
+- svgs: 25 files
+- images: 7 files
+- fonts: 9 files
+- docs-fall2025: 3 files
+- docs: 4 files
+
+Sample files:
+svgs:
+  web/public/maps/AEC2.svg
+  web/public/maps/atm2.svg
+  web/public/maps/book store2.svg
+  web/public/maps/den2.svg
+  web/public/maps/elevator.svg
+  web/public/maps/gaming room2.svg
+  web/public/maps/help desk2.svg
+  web/public/maps/chickfila2.svg
+  web/public/maps/dining hall2.svg
+  web/public/maps/einstein3.svg
+images:
+  web/public/images/BrendanM.jpg
+  web/public/images/karen.jpg
+  web/public/images/launcher-icon-1x.png
+  web/public/images/launcher-icon-2x.png
+  web/public/images/launcher-icon-3x.png
+  web/public/images/launcher-icon-4x.png
+  web/public/images/tinylogoBrowserStack.png
+fonts:
+  web/public/fonts/OpenSans-Italic-webfont.eot
+  web/public/fonts/OpenSans-Italic-webfont.ttf
+  web/public/fonts/OpenSans-Italic-webfont.woff
+  web/public/fonts/OpenSans-Light-webfont.eot
+  web/public/fonts/OpenSans-Light-webfont.ttf
+  web/public/fonts/OpenSans-Light-webfont.woff
+  web/public/fonts/OpenSans-Regular-webfont.eot
+  web/public/fonts/OpenSans-Regular-webfont.ttf
+  web/public/fonts/OpenSans-Regular-webfont.woff
+docs-fall2025:
+  docs/docs-fall2025/Client Meeting Transcript 8.22.2025 (1).txt
+  docs/docs-fall2025/GGC_Maps_Client_Meeting_Log_8-22-2025 (1).docx
+  docs/docs-fall2025/README.md
+docs:
+  docs/imported_from_old_repo/Project Requirements.docx
+  docs/imported_from_old_repo/Client Meeting Transcript 8.22.2025 (1).txt
+  docs/imported_from_old_repo/GGC_Maps_Client_Meeting_Log_8-22-2025 (1).docx
+  docs/imported_from_old_repo/README.md
