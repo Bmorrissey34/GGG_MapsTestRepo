@@ -4,7 +4,7 @@ import InlineSvg from '../components/InlineSvg';
 import ZoomPan from '../components/ZoomPan';
 
 export default function MapPage() {
-  const SRC = '/Maps/(Campus)/Campus.svg';
+  const SRC = '/BuildingMaps/(Campus)/Campus.svg';
   const [selectedId, setSelectedId] = useState(null);
 
   return (
