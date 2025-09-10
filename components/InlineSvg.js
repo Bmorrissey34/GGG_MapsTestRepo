@@ -1,118 +1,123 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 
-// very small sanitizer: strips inline JS handlers + <script> tags
-function sanitize(svgText) {
-  // remove <script>...</script>
-  svgText = svgText.replace(/<script[\s\S]*?<\/script>/gi, '');
-  // remove inline on* handlers: onclick, onmouseover, etc.
-  svgText = svgText.replace(/\son\w+="[^"]*"/gi, '');
-  svgText = svgText.replace(/\son\w+='[^']*'/gi, '');
-  // disallow javascript: hrefs just in case
-  svgText = svgText.replace(/\s(xlink:)?href=["']\s*javascript:[^"']*["']/gi, ' ');
-  return svgText;
+function sanitize(t) {
+  return t
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/\son\w+="[^"]*"/gi, '')
+    .replace(/\son\w+='[^']*'/gi, '')
+    .replace(/\s(xlink:)?href=["']\s*javascript:[^"']*["']/gi, ' ');
+}
+
+function inferKind(el) {
+  const cls = (el.className && el.className.baseVal) || el.getAttribute('class') || '';
+  const c = cls.toLowerCase();
+  if (c.includes('room')) return 'room';
+  if (c.includes('building')) return 'building';
+  if (c.includes('parking')) return 'parking';
+  if (c.includes('poi') || c.includes('store') || c.includes('dining')) return 'poi';
+  return 'poi';
 }
 
 export default function InlineSvg({
   src,
   className = '',
-  interactiveSelector = '.room-group', // tailored to your SVG
+  interactiveSelector = '.building-group, .building, .room-group',
   selectedId = null,
   onSelect,
+  onReady, // <- new
 }) {
-  const wrapRef = useRef(null);
+  const ref = useRef(null);
   const [markup, setMarkup] = useState(null);
-  const prevSelected = useRef(null);
+  const [error, setError] = useState(null);
+  const prev = useRef(null);
 
   useEffect(() => {
-    let active = true;
+    let alive = true;
     setMarkup(null);
-    fetch(src)
-      .then(r => r.text())
-      .then(t => {
-        if (!active) return;
-        setMarkup(sanitize(t));
-      })
-      .catch(err => console.error('SVG load error:', err));
-    return () => { active = false; };
+    setError(null);
+    fetch(src, { cache: 'no-store' })
+      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
+      .then(t => { if (alive) setMarkup(sanitize(t)); })
+      .catch(err => { if (alive) setError(err.message); });
+    return () => { alive = false; };
   }, [src]);
 
-  // wire interactivity + a11y once it’s in the DOM
   useEffect(() => {
-    if (!markup || !wrapRef.current) return;
-    const root = wrapRef.current;
+    if (!markup || !ref.current) return;
+    const root = ref.current;
 
-    const handleClick = (e) => {
+    const click = (e) => {
+      const el = e.target.closest(interactiveSelector);
+      if (el) onSelect?.(el.id || null, el);
+    };
+    const key = (e) => {
       const el = e.target.closest(interactiveSelector);
       if (!el) return;
-      onSelect?.(el.id || null, el);
-    };
-    const handleKey = (e) => {
-      const el = e.target.closest(interactiveSelector);
-      if (!el) return;
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        onSelect?.(el.id || null, el);
-      }
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onSelect?.(el.id || null, el); }
     };
 
-    // make interactive shapes tabbable/labelled
+    // a11y + focusability
     root.querySelectorAll(interactiveSelector).forEach(el => {
-      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
-      if (!el.hasAttribute('role')) el.setAttribute('role', 'button');
-
-      // if there’s a text label inside, use it for aria-label
+      el.hasAttribute('tabindex') || el.setAttribute('tabindex', '0');
+      el.hasAttribute('role') || el.setAttribute('role', 'button');
       if (!el.hasAttribute('aria-label')) {
         const t = el.querySelector('text');
-        if (t && t.textContent.trim()) {
-          el.setAttribute('aria-label', t.textContent.trim());
-        } else if (el.id) {
-          el.setAttribute('aria-label', el.id);
-        }
+        el.setAttribute('aria-label', (t && t.textContent.trim()) || el.id || 'map element');
       }
     });
 
-    root.addEventListener('click', handleClick);
-    root.addEventListener('keydown', handleKey);
-    return () => {
-      root.removeEventListener('click', handleClick);
-      root.removeEventListener('keydown', handleKey);
-    };
-  }, [markup, interactiveSelector, onSelect]);
+    root.addEventListener('click', click);
+    root.addEventListener('keydown', key);
 
-  // keep selection in sync with your existing CSS (.active-room) + aria
-  useEffect(() => {
-    const root = wrapRef.current;
-    if (!root) return;
-
-    if (prevSelected.current) {
-      const prev = root.querySelector(`#${CSS.escape(prevSelected.current)}`);
-      if (prev) {
-        prev.classList.remove('active-room');
-        prev.setAttribute('aria-selected', 'false');
-      }
+    // REPORT REAL IDS to the parent
+    if (onReady) {
+      const items = Array.from(root.querySelectorAll(interactiveSelector))
+        .filter(el => el.id && String(el.id).trim().length > 0)
+        .map(el => {
+          const label = el.querySelector('text')?.textContent?.trim() || '';
+          return {
+            id: el.id,
+            kind: inferKind(el),
+            name: label,        // may be '', that’s fine
+            svg: src,
+          };
+        });
+      onReady(items);
     }
 
+    return () => {
+      root.removeEventListener('click', click);
+      root.removeEventListener('keydown', key);
+    };
+  }, [markup, interactiveSelector, onSelect, onReady, src]);
+
+  useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+    if (prev.current) {
+      const p = root.querySelector(`#${CSS.escape(prev.current)}`);
+      if (p) { p.classList.remove('active-room'); p.setAttribute('aria-selected','false'); }
+    }
     if (selectedId) {
       const el = root.querySelector(`#${CSS.escape(selectedId)}`);
-      if (el) {
-        el.classList.add('active-room');        // your legacy highlight class
-        el.setAttribute('aria-selected', 'true'); // a11y hook
-        prevSelected.current = selectedId;
-      } else {
-        prevSelected.current = null;
-      }
+      if (el) { el.classList.add('active-room'); el.setAttribute('aria-selected','true'); }
+      prev.current = selectedId;
     } else {
-      prevSelected.current = null;
+      prev.current = null;
     }
   }, [selectedId]);
 
+  if (error) {
+    return <div className="alert alert-warning m-2">Couldn’t load <code>{src}</code> ({error}). Check path/casing under <code>/public</code>.</div>;
+  }
+
   return (
     <div
-      ref={wrapRef}
+      ref={ref}
       className={className}
       // eslint-disable-next-line react/no-danger
-      dangerouslySetInnerHTML={ markup ? { __html: markup } : undefined }
+      dangerouslySetInnerHTML={markup ? { __html: markup } : undefined}
       aria-busy={markup ? 'false' : 'true'}
     />
   );
