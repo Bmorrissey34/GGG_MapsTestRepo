@@ -2,7 +2,7 @@
 
 import { Inter } from 'next/font/google';
 import 'bootstrap/dist/css/bootstrap.min.css'; // <-- Add this line
-import './globals.css';
+import '../app/global.css';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
