@@ -1,7 +1,5 @@
 /* app/globals.css */
 
-/* Add these new styles */
-
 /* Sticky Footer Layout */
 body {
   display: flex;
@@ -10,7 +8,7 @@ body {
 }
 
 main {
-  flex: 1; /* Pushes the footer to the bottom */
+  flex: 1; 
 }
 
 /* Header Styles */
