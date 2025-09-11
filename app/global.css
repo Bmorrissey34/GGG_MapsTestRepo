@@ -1,21 +1,38 @@
 /* app/globals.css */
 
+/* 🌍 Global Variables */
+:root {
+  /* Variable 1: Responsive font size */
+  --base-font-size: clamp(14px, 2.5vw, 18px);
+  /* Minimum 14px (readable on phones),
+     scales with viewport width (2.5vw),
+     maximum 18px (comfortable on desktops). */
+
+  /* Variable 2: Responsive spacing unit */
+  --spacing-unit: clamp(0.5rem, 2vw, 1.5rem);
+  /* On phones: 0.5rem (compact),
+     scales with viewport (2vw),
+     on large screens: max 1.5rem. */
+}
+
 /* Sticky Footer Layout */
 body {
+  font-size: var(--base-font-size);   /* ✅ uses variable */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
 }
 
 main {
-  flex: 1; 
+  flex: 1; /* Pushes the footer to the bottom */
 }
 
 /* Header Styles */
 .header {
   background-color: #006400; /* GGC Green */
   color: white;
-  padding: 0.75rem 0;
+  padding: var(--spacing-unit) 0;     /* ✅ uses variable */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -28,7 +45,7 @@ main {
 .header-logo-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* Space between logo and title */
+  gap: var(--spacing-unit); /* ✅ uses variable */
   text-decoration: none;
   color: white;
 }
@@ -42,7 +59,7 @@ main {
 .footer {
   background-color: #333;
   color: #ccc;
-  padding: 1.5rem 0;
+  padding: calc(var(--spacing-unit) * 2) 0; /* ✅ uses variable */
   text-align: center;
   font-size: 0.9rem;
 }
