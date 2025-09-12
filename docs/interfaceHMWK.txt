@@ -1,0 +1,13 @@
+global.css under apps
+
+Put what you have done for the interface here
+
+Justin implemented variables all on the index page
+     --justin-globe1: "Georgia", Arial, sans-serif;
+     --justin-globe1-color: #000000;
+     --justin-globe1-bold: bold;
+
+     --justin-globe2-italian: italic;
+     --justin-globe2-under: underline;
+
+     --justin-globe3-border: 3px solid black;

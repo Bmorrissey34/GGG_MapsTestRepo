@@ -7,7 +7,7 @@ export default function PageContainer({ title, headerContent, children, classNam
   return (
     <main className={containerClasses}>
       <div className="d-flex align-items-center justify-content-between mb-2">
-        <h1 className="h5 mb-0">{title}</h1>
+        <h1 className="h4 mb-0" style={{ fontFamily: "var(--justin-globe1)",color: "var(--justin-globe1-color)", fontWeight: "var(--justin-globe1-bold)"}}>{title}</h1>
         {headerContent}
       </div>
       <div className="border rounded-3" style={{ overflow: 'hidden', background: 'white' }}>
