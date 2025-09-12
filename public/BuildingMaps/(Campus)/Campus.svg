@@ -1199,6 +1199,9 @@ svg #parking-deck {
 svg .building-label {
   fill: #fff;
 }
+svg .building-label-alt {
+  fill: #000;
+}
 /* line 98, ../lib/sass/_campus.scss */
 svg .parking-label {
   fill: #000;
@@ -1467,7 +1470,7 @@ ABr/+gACAAYAAQABAAAABgATAAEAFQAVAA8AFwAXABAAGQAZABEAGwAcABIAAA==")}
 		1152.7,516.3 1159.2,527 1167.7,521.8 1170.3,526.2 	"></polygon>
 <polygon class="handicap-parking" id="handicap-b-lot" points="764.3,557.4 760.3,559.8 742.9,529.7 747.8,526.3 744,519.8 766.1,506
 		768.9,511.1 773.9,508.4 792.5,539.7 788.8,542.3 	"></polygon>
-<path class="student-parking" d="M954.6,508.6c0.4,0.7,4,6.7,4,6.7s0.6,1.1-0.6,1.7s-2.3-0.1-2.3-0.1l-2.2-2.9l-16.4,9.8
+<path class="staff-parking" d="M954.6,508.6c0.4,0.7,4,6.7,4,6.7s0.6,1.1-0.6,1.7s-2.3-0.1-2.3-0.1l-2.2-2.9l-16.4,9.8
 		c0,0,3.6,3.6,2.3,4.5s-3-1-3-1s-2.3-2.9-4.7-5.4l-4.6,4.4c2.9,2.6,3.9,6,3.9,6s0.8,0.9-0.8,1.8s-2.3,0.1-2.3,0.1l-2.4-3.9
 		L879.1,557l41.7,70.3l34.2-20.1l-1.9-3.8c0,0-0.9-1.4,0.8-2.6s2.6,0.3,2.6,0.3l2.3,3.6l34.8-19.5l-2.1-3.6c0,0-1.6-3,0.6-4.3
 		s3.8,1.5,3.8,1.5l2.2,3.7l7-4c-5.5-8.9-39.2-68.1-39.2-68.1s-1.4-2.4-2.9-5.8L954.6,508.6z" id="h-lot"></path>
@@ -2523,7 +2526,7 @@ ABr/+gACAAYAAQABAAAABgATAAEAFQAVAA8AFwAXABAAGQAZABEAGwAcABIAAA==")}
 </g>
 </g>
 <g id="labels">
-<text class="building-label" transform="matrix(0.9987 0.0512 -0.0512 0.9987 163.8164 925.1709)">3000 Lot</text>
+<text class="building-label-alt" transform="matrix(0.9987 0.0512 -0.0512 0.9987 163.8164 925.1709)">3000 Lot</text>
 <text transform="matrix(0.8618 -0.5072 0.5072 0.8618 1172.582 488.8276)"><tspan class="parking-label small-label" x="0" y="0">Parking</tspan><tspan class="parking-label small-label" x="0" y="14.401">Deck</tspan></text>
 <text class="parking-label small-label" transform="matrix(0.9152 -0.403 0.403 0.9152 847.0361 741.0039)">L Lot</text>
 <text class="parking-label small-label" transform="matrix(0.8562 -0.5167 0.5167 0.8562 1166.6416 759.3438)">A Lot</text>
