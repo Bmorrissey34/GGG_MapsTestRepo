@@ -1,8 +1,10 @@
-/* Floating action button (mobile toggle) */
+/* Floating action button (for mobile toggle) */
 .fab {
   position: fixed;
-  right: 1rem;
-  bottom: 1rem;
+  left: 8rem;   /* push it further right */
+  top: 10rem;    /* push it further down, below the green header */
+  right: auto;
+  bottom: auto;
   width: 44px;
   height: 44px;
   border-radius: 9999px;
@@ -11,15 +13,16 @@
   color: #fff;
   font-size: 1.1rem;
   cursor: pointer;
-  z-index: 2147483647; /* ensures it's on top */
+  z-index: 2147483647;
   box-shadow: 0 6px 18px rgba(0,0,0,0.25);
 }
 
-/* Legend panel */
 .legend {
   position: fixed;
-  right: 1rem;
-  bottom: 4.5rem; /* sits above the FAB */
+  left: 10rem;   /* align with the button */
+  top: 15rem;   /* a little further down so it sits under the FAB */
+  right: auto;
+  bottom: auto;
   width: min(92vw, 320px);
   max-height: 60vh;
   background: #ffffff;
@@ -27,7 +30,7 @@
   border-radius: 12px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.25);
   overflow: hidden;
-  transform: translateY(8px);
+  transform: translateY(-8px);
   opacity: 0;
   pointer-events: none;
   transition: opacity 180ms ease, transform 180ms ease;
@@ -42,9 +45,10 @@
 
 .hide {
   opacity: 0;
-  transform: translateY(8px);
+  transform: translateY(-8px); /* matches the top placement */
   pointer-events: none;
 }
+
 
 .header {
   display: flex;
