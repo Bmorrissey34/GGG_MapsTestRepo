@@ -1,0 +1,6 @@
+[
+  { "color": "#22c55e", "label": "Edificio académico" },
+  { "color": "#3b82f6", "label": "Servicios estudiantiles" },
+  { "color": "#eab308", "label": "Estacionamiento" },
+  { "color": "#ef4444", "label": "Área restringida" }
+]
