@@ -13,6 +13,7 @@ export default function Header() {
             width={40} // Adjust width as needed
             height={40} // Adjust height as needed
             priority // Makes the logo load faster
+            style={{border: "var(--justin-globe3-border)"}}
           />
           <span className="header-title">GGC Maps</span>
         </Link>
