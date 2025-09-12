@@ -1,6 +1,6 @@
 /* app/globals.css */
 
-/* 🌍 Global Variables */
+/* 🌍 Global Variables  Karen Armendariz*/
 :root {
   /* Variable 1: Responsive font size */
   --base-font-size: clamp(14px, 2.5vw, 18px);
@@ -8,7 +8,7 @@
      scales with viewport width (2.5vw),
      maximum 18px (comfortable on desktops). */
 
-  /* Variable 2: Responsive spacing unit */
+  /* Variable 2: Responsive spacing unit , Karen Armendariz*/
   --spacing-unit: clamp(0.5rem, 2vw, 1.5rem);
   /* On phones: 0.5rem (compact),
      scales with viewport (2vw),
