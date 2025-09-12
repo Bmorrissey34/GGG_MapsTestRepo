@@ -1,5 +1,6 @@
 // components/CampusMapView.js
 'use client';
+import Legend from "./legend";
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import InlineSvg from './InlineSvg';
@@ -36,6 +37,7 @@ export default function CampusMapView({
           onSelect={handleSelect}
         />
       </ZoomPan>
+      <Legend locale={(typeof navigator !== "undefined" ? navigator.language.split("-")[0] : "en")} />
     </PageContainer>
   );
 }

@@ -1,0 +1,6 @@
+[
+  { "color": "#22c55e", "label": "Academic Building" },
+  { "color": "#3b82f6", "label": "Student Services" },
+  { "color": "#eab308", "label": "Parking" },
+  { "color": "#ef4444", "label": "Restricted Area" }
+]
