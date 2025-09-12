@@ -11,3 +11,16 @@ Justin implemented variables all on the index page
      --justin-globe2-under: underline;
 
      --justin-globe3-border: 3px solid black;
+
+Karen Armendariz - global variables implemented:
+ Variable 1: Responsive font size
+  --base-font-size: clamp(14px, 2.5vw, 18px);
+ Minimum 14px (readable on phones),
+ scales with viewport width (2.5vw),
+ maximum 18px (comfortable on desktops).
+
+ Variable 2: Responsive spacing unit
+  --spacing-unit: clamp(0.5rem, 2vw, 1.5rem);
+ On phones: 0.5rem (compact),
+ scales with viewport (2vw),
+ on large screens: max 1.5rem.     
