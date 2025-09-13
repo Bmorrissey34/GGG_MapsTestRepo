@@ -25,7 +25,7 @@
   --justin-globe3-border: 3px solid black;
 
   /* William Stein's Global Variables*/
-  --sidebar-width: 220px;
+  --sidebar-width: 400px;
   --sidebar-collapsed-width: 60px;
   --sidebar-link-color: #006400;
   --sidebar-hover-color: black;
@@ -119,6 +119,7 @@ main {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14pt;
   font-weight: bold;
 }
 
