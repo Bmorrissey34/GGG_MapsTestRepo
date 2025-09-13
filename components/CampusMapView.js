@@ -4,7 +4,7 @@
 import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import Legend from './legend';          // keep lowercase to match legend.jsx
+import Legend from './legend';          
 import InlineSvg from './InlineSvg';
 import ZoomPan from './ZoomPan';
 import PageContainer from './PageContainer';

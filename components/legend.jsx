@@ -1,58 +1,70 @@
+// components/legend.jsx
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Legend.module.css";
 
-/**
- * Turn a label into a safe CSS class:
- * "Academic Building" -> "academic-building"
- * "Restricted Area!"   -> "restricted-area"
- */
+/** Convert label -> safe CSS class (e.g., "Academic Building" => "academic-building") */
 function labelToClass(label) {
   return String(label)
     .trim()
     .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, "")  // drop punctuation
-    .replace(/\s+/g, "-");         // spaces -> hyphens
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-");
+}
+
+/** Normalize color input to a consistent CSS string */
+function normalizeColor(c) {
+  if (!c) return "";
+  const s = String(c).trim();
+  // Allow #hex, rgb/rgba(), hsl/hsla(), and CSS color names as-is
+  return s;
 }
 
 /**
  * Apply legend colors to matching SVG elements.
- * It looks for elements with classes matching the normalized label.
- * e.g., label "Academic Building" -> selects ".academic-building"
+ * It looks for elements with classes matching the normalized label, within the map scope.
  */
-function applyLegendColors(items) {
-  if (!Array.isArray(items) || items.length === 0) return;
-
-  // Try to scope to a known map container if you have one (e.g., "#map-root" or ".map-wrap").
-  // We’ll search within the whole document as a fallback.
-  const scope = document.querySelector(".map-wrap") || document;
+function applyLegendColors(items, scopeEl) {
+  if (!Array.isArray(items) || items.length === 0 || !scopeEl) return;
 
   items.forEach((it) => {
     const cls = labelToClass(it.label);
-    if (!cls || !it.color) return;
+    const color = normalizeColor(it.color);
+    if (!cls || !color) return;
 
-    // Select matching nodes and paint them.
-    const nodes = scope.querySelectorAll(`.${cls}`);
-    if (nodes.length === 0) {
-      // Helpful during setup—comment out later if noisy.
-      // console.warn(`[Legend] No elements found for class ".${cls}"`);
-      return;
-    }
-
+    // Query elements with the class inside the scope
+    const nodes = scopeEl.querySelectorAll(`.${cls}`);
     nodes.forEach((el) => {
-      // Prefer fill. If your SVG uses stroke-only shapes, you can also set stroke.
-      el.setAttribute("fill", it.color);
-      // Optional fallback for line-art:
-      // if (!el.getAttribute("fill") || el.getAttribute("fill") === "none") {
-      //   el.setAttribute("stroke", it.color);
-      // }
+      // Set fill if the element has a fill or none/absent
+      const currentFill = el.getAttribute("fill");
+      if (!currentFill || currentFill === "none") {
+        el.setAttribute("fill", color);
+      } else {
+        // Respect an existing explicit fill? Uncomment next line to always override:
+        // el.setAttribute("fill", color);
+      }
+
+      // If the element is stroke-only (lines/paths), color stroke too
+      const currentStroke = el.getAttribute("stroke");
+      if (currentStroke || (!currentFill || currentFill === "none")) {
+        el.setAttribute("stroke", color);
+        if (!el.getAttribute("stroke-width")) {
+          el.setAttribute("stroke-width", "1.5");
+        }
+      }
     });
   });
 }
 
-export default function Legend({ locale = "en" }) {
+export default function Legend({
+  locale = "en",
+  /** CSS selector that wraps your rendered SVG. Defaults to a common wrapper you use. */
+  mapScopeSelector = ".map-wrap, #map-root, main",
+}) {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState("idle"); // idle | loading | ready | error
+  const scopeRef = useRef(null);
+  const observerRef = useRef(null);
 
   // Build fetch order: locale first, then English fallback.
   const urls = useMemo(
@@ -62,6 +74,16 @@ export default function Legend({ locale = "en" }) {
     ],
     [locale]
   );
+
+  // Resolve scope element after mount
+  useEffect(() => {
+    const resolved =
+      document.querySelector(mapScopeSelector) ||
+      document.querySelector(".map-wrap") ||
+      document.querySelector("#map-root") ||
+      document;
+    scopeRef.current = resolved;
+  }, [mapScopeSelector]);
 
   // Load legend items
   useEffect(() => {
@@ -79,13 +101,12 @@ export default function Legend({ locale = "en" }) {
           if (!res.ok) continue;
           const data = await res.json();
           if (!cancelled) {
-            const normalized = Array.isArray(data) ? data : [];
-            setItems(normalized);
+            setItems(Array.isArray(data) ? data : []);
             setStatus("ready");
           }
           return;
         } catch {
-          // try next URL
+          /* try next URL */
         }
       }
       if (!cancelled) setStatus("error");
@@ -97,10 +118,27 @@ export default function Legend({ locale = "en" }) {
     };
   }, [urls]);
 
-  // When items are ready, color the SVG
+  // Apply colors when items are ready AND whenever the SVG content changes.
   useEffect(() => {
-    if (status !== "ready") return;
-    applyLegendColors(items);
+    if (status !== "ready" || !scopeRef.current) return;
+
+    const scopeEl = scopeRef.current;
+
+    // Initial paint
+    applyLegendColors(items, scopeEl);
+
+    // Repaint on DOM changes inside the scope (e.g., InlineSvg loads/updates)
+    if (observerRef.current) observerRef.current.disconnect();
+    const obs = new MutationObserver(() => applyLegendColors(items, scopeEl));
+    observerRef.current = obs;
+    obs.observe(scopeEl, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ["fill", "stroke", "class"],
+    });
+
+    return () => obs.disconnect();
   }, [status, items]);
 
   return (
@@ -112,7 +150,6 @@ export default function Legend({ locale = "en" }) {
     >
       <div className={styles.header}>
         <h2>Legend</h2>
-        {/* No close button – legend is permanent */}
       </div>
 
       {status === "loading" && (
@@ -132,7 +169,7 @@ export default function Legend({ locale = "en" }) {
               <li key={it.label} className={styles.item}>
                 <span
                   className={styles.swatch}
-                  style={{ background: it.color }}
+                  style={{ background: normalizeColor(it.color) }}
                   aria-hidden="true"
                   title={`.${cls}`}
                 />

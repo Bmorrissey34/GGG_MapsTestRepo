@@ -49,6 +49,23 @@
   flex: 0 0 16px;
 }
 
+/* Swatch color overrides to match map */
+.academic {
+  background: #004d26; /* Dark green - Academic Building */
+}
+
+.services {
+  background: #b3d9a5; /* Light green - Student Services */
+}
+
+.parking {
+  background: #f2b5b0; /* Pinkish red - Parking */
+}
+
+.restricted {
+  background: #808080; /* Gray - Restricted Area */
+}
+
 /* Optional footer/button */
 .more {
   width: 100%;
