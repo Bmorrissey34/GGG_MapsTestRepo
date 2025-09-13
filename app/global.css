@@ -24,24 +24,27 @@
      --justin-globe3-border: 3px solid black;
 }
 
-/* Sticky Footer Layout */
+/* 🌍 Sticky Footer Layout */
 body {
   font-size: var(--base-font-size);   /* ✅ uses variable */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
+  font-family: var(--justin-font-family);
+  color: var(--justin-text-color);
 }
 
 main {
-  flex: 1; /* Pushes the footer to the bottom */
+  flex: 1; /* Pushes the footer down */
+  padding: var(--spacing-unit);
 }
 
-/* Header Styles */
+/* 🌟 Header Styles */
 .header {
   background-color: #006400; /* GGC Green */
   color: white;
-  padding: var(--spacing-unit) 0;     /* ✅ uses variable */
+  padding: var(--spacing-unit) 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -54,27 +57,38 @@ main {
 .header-logo-link {
   display: flex;
   align-items: center;
-  gap: var(--spacing-unit); /* ✅ uses variable */
+  gap: var(--spacing-unit);
   text-decoration: none;
-  color: white;
+  color: inherit;
 }
 
 .header-title {
   font-size: 1.5rem;
-  font-weight: bold;
-  font-style: var(--justin-globe2-italian);
-  text-decoration: var(--justin-globe2-under);
+  font-weight: var(--justin-font-weight);
+  font-style: var(--justin-style-italic);
+  text-decoration: var(--justin-style-underline);
 }
 
-/* Footer Styles */
+/* 🌟 Footer Styles */
 .footer {
   background-color: #333;
   color: #ccc;
-  padding: calc(var(--spacing-unit) * 2) 0; /* ✅ uses variable */
+  padding: calc(var(--spacing-unit) * 2) 0;
   text-align: center;
   font-size: 0.9rem;
+  border-top: var(--justin-border);
 }
 
 .footer p {
   margin: 0;
+}
+
+/* Map container styles */
+.map-wrap {
+  width: 85vw;           /* narrower → more white on sides */
+  margin: 2rem auto;     /* vertical + horizontal space */
+  background: #fff;      /* white card background */
+  padding: 2rem;         /* inner white padding around map */
+  border-radius: 8px;    /* optional: rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle depth */
 }
