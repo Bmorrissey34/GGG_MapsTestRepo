@@ -1,28 +1,10 @@
-/* Floating action button (for mobile toggle) */
-.fab {
-  position: fixed;
-  left: auto;
-  top: auto; 
-  right: 2rem;
-  bottom: 2rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 9999px;
-  border: none;
-  background: #111827;
-  color: #fff;
-  font-size: 1.1rem;
-  cursor: pointer;
-  z-index: 2147483647;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
-}
+/* Legend.module.css */
 
+/* Legend: fixed, always visible (top-right) */
 .legend {
   position: fixed;
-  left: auto;
-  top: auto; 
-  right: 2rem;
-  bottom: 2rem;
+  top: 8rem;
+  right: 8rem;
   width: min(92vw, 320px);
   max-height: 60vh;
   background: #ffffff;
@@ -30,44 +12,20 @@
   border-radius: 12px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.25);
   overflow: hidden;
-  transform: translateY(-8px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 180ms ease, transform 180ms ease;
   z-index: 2147483646;
 }
 
-.show {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.hide {
-  opacity: 0;
-  transform: translateY(-8px); /* matches the top placement */
-  pointer-events: none;
-}
-
-
+/* Header */
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* future-proof if you add actions */
   padding: 10px 12px;
   border-bottom: 1px solid #e5e7eb;
   background: #f9fafb;
 }
 
-.close {
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-  color: #6b7280;
-}
-
+/* List */
 .list {
   margin: 0;
   padding: 8px 12px;
@@ -91,6 +49,7 @@
   flex: 0 0 16px;
 }
 
+/* Optional footer/button */
 .more {
   width: 100%;
   border: none;
@@ -98,4 +57,12 @@
   color: #fff;
   padding: 10px 12px;
   cursor: pointer;
+}
+
+/* Remove any FAB/close/toggle artifacts if they existed */
+.fab,
+.show,
+.hide,
+.close {
+  display: none !important;
 }
