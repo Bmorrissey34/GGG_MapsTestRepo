@@ -78,3 +78,37 @@ main {
 .footer p {
   margin: 0;
 }
+
+.sidebar {
+  min-width: 220px;
+  width: 220px;
+  transition: width 0.2s;
+}
+
+.sidebar.collapsed .nav-link {
+  display: none;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar .nav-link {
+  color: #006400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar .nav-link {
+  color: #006400;
+  font-weight: bold;
+}
+
+.sidebar .nav-link:hover {
+  color: black;
+}
+
+.sidebar .btn {
+  width: 40px;
+}
