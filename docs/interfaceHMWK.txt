@@ -24,3 +24,11 @@ Karen Armendariz - global variables implemented:
  On phones: 0.5rem (compact),
  scales with viewport (2vw),
  on large screens: max 1.5rem.     
+
+ William Stein Implemented:
+ --sidebar-width: 220px;
+ --sidebar-collapsed-width: 60px;
+ --sidebar-link-color: #006400;
+ --sidebar-hover-color: black;
+ All of these variables were implemented in the global.css file and the html
+ is found within Sidebar.js and layout.js

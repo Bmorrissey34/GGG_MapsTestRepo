@@ -23,6 +23,12 @@
   --justin-globe2-under: underline;
 
   --justin-globe3-border: 3px solid black;
+
+  /* William Stein's Global Variables*/
+  --sidebar-width: 400px;
+  --sidebar-collapsed-width: 60px;
+  --sidebar-link-color: #006400;
+  --sidebar-hover-color: black;
 }
 
 /* 🌍 Sticky Footer Layout */
@@ -96,13 +102,12 @@ main {
 
 /* ✅ Sidebar styles (incoming changes) */
 .sidebar {
-  min-width: 220px;
-  width: 220px;
+  width: var(--sidebar-width);
   transition: width 0.2s;
 }
 
 .sidebar.collapsed {
-  width: 60px;
+  width: var(--sidebar-collapsed-width);
 }
 
 .sidebar.collapsed .nav-link {
@@ -110,15 +115,16 @@ main {
 }
 
 .sidebar .nav-link {
-  color: #006400;
+  color: var(--sidebar-link-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 14pt;
   font-weight: bold;
 }
 
 .sidebar .nav-link:hover {
-  color: black;
+  color: var(--sidebar-hover-color);
 }
 
 .sidebar .btn {
