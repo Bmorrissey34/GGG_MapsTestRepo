@@ -14,14 +14,15 @@
      scales with viewport (2vw),
      on large screens: max 1.5rem. */
 
-     --justin-globe1: "Georgia", Arial, sans-serif;
-     --justin-globe1-color: #000000;
-     --justin-globe1-bold: bold;
+  /* Justin's globals (normalized names) */
+  --justin-globe1: "Georgia", Arial, sans-serif;
+  --justin-globe1-color: #000000;
+  --justin-globe1-bold: bold;
 
-     --justin-globe2-italian: italic;
-     --justin-globe2-under: underline;
+  --justin-globe2-italian: italic;
+  --justin-globe2-under: underline;
 
-     --justin-globe3-border: 3px solid black;
+  --justin-globe3-border: 3px solid black;
 }
 
 /* 🌍 Sticky Footer Layout */
@@ -31,8 +32,8 @@ body {
   flex-direction: column;
   min-height: 100vh;
   margin: 0;
-  font-family: var(--justin-font-family);
-  color: var(--justin-text-color);
+  font-family: var(--justin-globe1);         /* fixed var name */
+  color: var(--justin-globe1-color);         /* fixed var name */
 }
 
 main {
@@ -64,9 +65,9 @@ main {
 
 .header-title {
   font-size: 1.5rem;
-  font-weight: var(--justin-font-weight);
-  font-style: var(--justin-style-italic);
-  text-decoration: var(--justin-style-underline);
+  font-weight: var(--justin-globe1-bold);    /* fixed var name */
+  font-style: var(--justin-globe2-italian);  /* fixed var name */
+  text-decoration: var(--justin-globe2-under); /* fixed var name */
 }
 
 /* 🌟 Footer Styles */
@@ -76,14 +77,14 @@ main {
   padding: calc(var(--spacing-unit) * 2) 0;
   text-align: center;
   font-size: 0.9rem;
-  border-top: var(--justin-border);
+  border-top: var(--justin-globe3-border);   /* fixed var name */
 }
 
 .footer p {
   margin: 0;
 }
 
-/* Map container styles */
+/* ✅ Map container styles (your changes) */
 .map-wrap {
   width: 85vw;           /* narrower → more white on sides */
   margin: 2rem auto;     /* vertical + horizontal space */
@@ -91,4 +92,35 @@ main {
   padding: 2rem;         /* inner white padding around map */
   border-radius: 8px;    /* optional: rounded corners */
   box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle depth */
+}
+
+/* ✅ Sidebar styles (incoming changes) */
+.sidebar {
+  min-width: 220px;
+  width: 220px;
+  transition: width 0.2s;
+}
+
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar.collapsed .nav-link {
+  display: none;
+}
+
+.sidebar .nav-link {
+  color: #006400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: bold;
+}
+
+.sidebar .nav-link:hover {
+  color: black;
+}
+
+.sidebar .btn {
+  width: 40px;
 }

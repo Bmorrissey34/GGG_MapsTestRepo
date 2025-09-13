@@ -1,10 +1,10 @@
 /* Floating action button (for mobile toggle) */
 .fab {
   position: fixed;
-  left: 8rem;   /* push it further right */
-  top: 10rem;    /* push it further down, below the green header */
-  right: auto;
-  bottom: auto;
+  left: auto;
+  top: auto; 
+  right: 2rem;
+  bottom: 2rem;
   width: 44px;
   height: 44px;
   border-radius: 9999px;
@@ -19,10 +19,10 @@
 
 .legend {
   position: fixed;
-  left: 10rem;   /* align with the button */
-  top: 15rem;   /* a little further down so it sits under the FAB */
-  right: auto;
-  bottom: auto;
+  left: auto;
+  top: auto; 
+  right: 2rem;
+  bottom: 2rem;
   width: min(92vw, 320px);
   max-height: 60vh;
   background: #ffffff;
