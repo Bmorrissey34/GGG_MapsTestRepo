@@ -24,6 +24,9 @@
 
   --justin-globe3-border: 3px solid black;
 
+  --justin-globe-gap: 10px;
+  --justin-globe-inputBarSize: 250%;
+
   /* William Stein's Global Variables*/
   --sidebar-width: 400px;
   --sidebar-collapsed-width: 60px;
