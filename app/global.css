@@ -32,6 +32,18 @@
   --sidebar-collapsed-width: 60px;
   --sidebar-link-color: #006400;
   --sidebar-hover-color: black;
+
+  /* Brnendan Morrissey's Global Header & Footer Variables*/
+  --bm-header-bg: #006400;                  /* Header background (GGC Green) */
+  --bm-header-text-color: #ffffff;          /* Header text color */
+  --bm-header-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Header subtle shadow */
+  --bm-header-title-font-size: 1.5rem;      /* Header title size */
+
+  --bm-footer-bg: #333333;                  /* Footer background */
+  --bm-footer-text-color: #cccccc;          /* Footer text color */
+  --bm-footer-font-size: 0.9rem;            /* Footer base font size */
+  --bm-footer-padding-y: calc(var(--spacing-unit) * 2); /* Vertical padding */
+  --bm-footer-border-top: var(--justin-globe3-border);  /* Reuse existing border var */
 }
 
 /* 🌍 Sticky Footer Layout */
@@ -52,10 +64,10 @@ main {
 
 /* 🌟 Header Styles */
 .header {
-  background-color: #006400; /* GGC Green */
-  color: white;
+  background-color: var(--bm-header-bg);
+  color: var(--bm-header-text-color);
   padding: var(--spacing-unit) 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--bm-header-shadow);
 }
 
 .header .container {
@@ -73,7 +85,7 @@ main {
 }
 
 .header-title {
-  font-size: 1.5rem;
+  font-size: var(--bm-header-title-font-size);
   font-weight: var(--justin-globe1-bold);    /* fixed var name */
   font-style: var(--justin-globe2-italian);  /* fixed var name */
   text-decoration: var(--justin-globe2-under); /* fixed var name */
@@ -81,12 +93,12 @@ main {
 
 /* 🌟 Footer Styles */
 .footer {
-  background-color: #333;
-  color: #ccc;
-  padding: calc(var(--spacing-unit) * 2) 0;
+  background-color: var(--bm-footer-bg);
+  color: var(--bm-footer-text-color);
+  padding: var(--bm-footer-padding-y) 0;
+  font-size: var(--bm-footer-font-size);
+  border-top: var(--bm-footer-border-top);
   text-align: center;
-  font-size: 0.9rem;
-  border-top: var(--justin-globe3-border);   /* fixed var name */
 }
 
 .footer p {
