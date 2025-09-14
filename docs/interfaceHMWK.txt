@@ -1,0 +1,34 @@
+global.css under apps
+
+Put what you have done for the interface here
+
+Justin implemented variables all on the index page
+     --justin-globe1: "Georgia", Arial, sans-serif;
+     --justin-globe1-color: #000000;
+     --justin-globe1-bold: bold;
+
+     --justin-globe2-italian: italic;
+     --justin-globe2-under: underline;
+
+     --justin-globe3-border: 3px solid black;
+
+Karen Armendariz - global variables implemented:
+ Variable 1: Responsive font size
+  --base-font-size: clamp(14px, 2.5vw, 18px);
+ Minimum 14px (readable on phones),
+ scales with viewport width (2.5vw),
+ maximum 18px (comfortable on desktops).
+
+ Variable 2: Responsive spacing unit
+  --spacing-unit: clamp(0.5rem, 2vw, 1.5rem);
+ On phones: 0.5rem (compact),
+ scales with viewport (2vw),
+ on large screens: max 1.5rem.     
+
+ William Stein Implemented:
+ --sidebar-width: 220px;
+ --sidebar-collapsed-width: 60px;
+ --sidebar-link-color: #006400;
+ --sidebar-hover-color: black;
+ All of these variables were implemented in the global.css file and the html
+ is found within Sidebar.js and layout.js

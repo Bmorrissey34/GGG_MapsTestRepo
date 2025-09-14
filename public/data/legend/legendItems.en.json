@@ -1,0 +1,20 @@
+[
+  { "label": "Academic Building", "color": "#004d26", "selector": ".academic-building" },
+  {
+  "label": "Student Housing",
+  "color": "#8b5cf6",
+  "selector": "[id='b1000'] .building, [id='2'] .building, [id='3'] .building, .student-housing .building, .housing .building, [data-type='housing'] .building"
+  },
+  {
+    "label": "Parking",
+    "color": "#eab308",
+    "selector": ".parking",
+    "children": [
+      { "label": "Reserved",  "color": "#f2b5b0", "selector": ".reserved, .parking-reserved" },
+      { "label": "Residents", "color": "#fde0b2", "selector": ".residents, .parking-residents" },
+      { "label": "Students",  "color": "#d9f2d1", "selector": ".students, .parking-students" },
+      { "label": "Handicap",  "color": "#a9d3f3", "selector": ".handicap, .parking-handicap" }
+    ]
+  },
+  { "label": "Restricted Area",   "color": "#808080", "selector": ".restricted-area" }
+]

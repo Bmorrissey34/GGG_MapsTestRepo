@@ -1,22 +1,73 @@
 /* app/globals.css */
 
-/* Sticky Footer Layout */
+/* 🌍 Global Variables  Karen Armendariz*/
+:root {
+  /* Variable 1: Responsive font size */
+  --base-font-size: clamp(14px, 2.5vw, 18px);
+  /* Minimum 14px (readable on phones),
+     scales with viewport width (2.5vw),
+     maximum 18px (comfortable on desktops). */
+
+  /* Variable 2: Responsive spacing unit , Karen Armendariz*/
+  --spacing-unit: clamp(0.5rem, 2vw, 1.5rem);
+  /* On phones: 0.5rem (compact),
+     scales with viewport (2vw),
+     on large screens: max 1.5rem. */
+
+  /* Justin's globals (normalized names) */
+  --justin-globe1: "Georgia", Arial, sans-serif;
+  --justin-globe1-color: #000000;
+  --justin-globe1-bold: bold;
+
+  --justin-globe2-italian: italic;
+  --justin-globe2-under: underline;
+
+  --justin-globe3-border: 3px solid black;
+
+  --justin-globe-gap: 10px;
+  --justin-globe-inputBarSize: 250%;
+
+  /* William Stein's Global Variables*/
+  --sidebar-width: 400px;
+  --sidebar-collapsed-width: 60px;
+  --sidebar-link-color: #006400;
+  --sidebar-hover-color: black;
+
+  /* Brnendan Morrissey's Global Header & Footer Variables*/
+  --bm-header-bg: #006400;                  /* Header background (GGC Green) */
+  --bm-header-text-color: #ffffff;          /* Header text color */
+  --bm-header-shadow: 0 2px 4px rgba(0,0,0,0.1);  /* Header subtle shadow */
+  --bm-header-title-font-size: 1.5rem;      /* Header title size */
+
+  --bm-footer-bg: #333333;                  /* Footer background */
+  --bm-footer-text-color: #cccccc;          /* Footer text color */
+  --bm-footer-font-size: 0.9rem;            /* Footer base font size */
+  --bm-footer-padding-y: calc(var(--spacing-unit) * 2); /* Vertical padding */
+  --bm-footer-border-top: var(--justin-globe3-border);  /* Reuse existing border var */
+}
+
+/* 🌍 Sticky Footer Layout */
 body {
+  font-size: var(--base-font-size);   /* ✅ uses variable */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  margin: 0;
+  font-family: var(--justin-globe1);         /* fixed var name */
+  color: var(--justin-globe1-color);         /* fixed var name */
 }
 
 main {
-  flex: 1; 
+  flex: 1; /* Pushes the footer down */
+  padding: var(--spacing-unit);
 }
 
-/* Header Styles */
+/* 🌟 Header Styles */
 .header {
-  background-color: #006400; /* GGC Green */
-  color: white;
-  padding: 0.75rem 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: var(--bm-header-bg);
+  color: var(--bm-header-text-color);
+  padding: var(--spacing-unit) 0;
+  box-shadow: var(--bm-header-shadow);
 }
 
 .header .container {
@@ -28,25 +79,82 @@ main {
 .header-logo-link {
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* Space between logo and title */
+  gap: var(--spacing-unit);
   text-decoration: none;
-  color: white;
+  color: inherit;
 }
 
 .header-title {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: var(--bm-header-title-font-size);
+  font-weight: var(--justin-globe1-bold);    /* fixed var name */
+  font-style: var(--justin-globe2-italian);  /* fixed var name */
+  text-decoration: var(--justin-globe2-under); /* fixed var name */
 }
 
-/* Footer Styles */
+/* 🌟 Footer Styles */
 .footer {
-  background-color: #333;
-  color: #ccc;
-  padding: 1.5rem 0;
+  background-color: var(--bm-footer-bg);
+  color: var(--bm-footer-text-color);
+  padding: var(--bm-footer-padding-y) 0;
+  font-size: var(--bm-footer-font-size);
+  border-top: var(--bm-footer-border-top);
   text-align: center;
-  font-size: 0.9rem;
 }
 
 .footer p {
   margin: 0;
 }
+
+/* ✅ Map container styles (your changes) */
+.map-wrap {
+  width: 85vw;           /* narrower → more white on sides */
+  margin: 2rem auto;     /* vertical + horizontal space */
+  background: #fff;      /* white card background */
+  padding: 2rem;         /* inner white padding around map */
+  border-radius: 8px;    /* optional: rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* subtle depth */
+}
+
+/* ✅ Sidebar styles (incoming changes) */
+.sidebar {
+  width: var(--sidebar-width);
+  transition: width 0.2s;
+}
+
+.sidebar.collapsed {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar.collapsed .nav-link {
+  display: none;
+}
+
+.sidebar .nav-link {
+  color: var(--sidebar-link-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.sidebar .nav-link:hover {
+  color: var(--sidebar-hover-color);
+}
+
+.sidebar .btn {
+  width: 40px;
+}
+
+.ggcLinks{
+  color: hotpink;
+}
+
+.ggcLinks:hover{
+  color: purple;
+}
+
+.ggcLinks:active{
+  color: gold;
+}
+
