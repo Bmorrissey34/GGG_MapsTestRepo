@@ -133,3 +133,16 @@ main {
 .sidebar .btn {
   width: 40px;
 }
+
+.ggcLinks{
+  color: hotpink;
+}
+
+.ggcLinks:hover{
+  color: purple;
+}
+
+.ggcLinks:active{
+  color: gold;
+}
+

@@ -1,5 +1,6 @@
 // components/PageContainer.js
 import Find from "../components/Find";
+import Links from "../components/Links";
 export default function PageContainer({ title, headerContent, children, className }) {
   // We combine the default classes with any custom classes you pass in.
   const containerClasses = `container py-3 ${className || ''}`;
@@ -14,6 +15,7 @@ export default function PageContainer({ title, headerContent, children, classNam
       <div className="border rounded-3" style={{ overflow: 'hidden', background: 'white' }}>
         {children}
       </div>
+      <Links></Links>
     </main>
   );
 }
