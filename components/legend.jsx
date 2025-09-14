@@ -1,9 +1,9 @@
-// components/legend.jsx
 "use client";
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Legend.module.css";
 
-/** Convert label -> safe CSS class (e.g., "Academic Building" => "academic-building") */
+/** "Academic Building" -> "academic-building" */
 function labelToClass(label) {
   return String(label)
     .trim()
@@ -11,46 +11,48 @@ function labelToClass(label) {
     .replace(/[^a-z0-9\s-]/g, "")
     .replace(/\s+/g, "-");
 }
-
-/** Normalize color input to a consistent CSS string */
 function normalizeColor(c) {
   if (!c) return "";
-  const s = String(c).trim();
-  // Allow #hex, rgb/rgba(), hsl/hsla(), and CSS color names as-is
-  return s;
+  return String(c).trim();
 }
 
-/**
- * Apply legend colors to matching SVG elements.
- * It looks for elements with classes matching the normalized label, within the map scope.
- */
+/** Recursively flatten items + children for coloring */
+function flattenItems(items) {
+  const out = [];
+  (items || []).forEach((it) => {
+    out.push(it);
+    if (Array.isArray(it.children)) out.push(...flattenItems(it.children));
+  });
+  return out;
+}
+
 function applyLegendColors(items, scopeEl) {
   if (!Array.isArray(items) || items.length === 0 || !scopeEl) return;
 
-  items.forEach((it) => {
+  // flatten parent + children (e.g., Parking subtypes)
+  const flat = [];
+  (items || []).forEach((it) => {
+    flat.push(it);
+    if (Array.isArray(it.children)) flat.push(...it.children);
+  });
+
+  flat.forEach((it) => {
     const cls = labelToClass(it.label);
     const color = normalizeColor(it.color);
     if (!cls || !color) return;
 
-    // Query elements with the class inside the scope
-    const nodes = scopeEl.querySelectorAll(`.${cls}`);
-    nodes.forEach((el) => {
-      // Set fill if the element has a fill or none/absent
-      const currentFill = el.getAttribute("fill");
-      if (!currentFill || currentFill === "none") {
-        el.setAttribute("fill", color);
-      } else {
-        // Respect an existing explicit fill? Uncomment next line to always override:
-        // el.setAttribute("fill", color);
-      }
+    const selector = it.selector || `.${cls}`;
+    const nodes = scopeEl.querySelectorAll(selector);
 
-      // If the element is stroke-only (lines/paths), color stroke too
-      const currentStroke = el.getAttribute("stroke");
-      if (currentStroke || (!currentFill || currentFill === "none")) {
-        el.setAttribute("stroke", color);
-        if (!el.getAttribute("stroke-width")) {
-          el.setAttribute("stroke-width", "1.5");
-        }
+    if (nodes.length === 0) {
+      console.warn(`[Legend] No SVG matches for "${it.label}" using selector: ${selector}`);
+    }
+
+    nodes.forEach((el) => {
+      el.style.setProperty("fill", color, "important");
+      el.style.setProperty("stroke", color, "important");
+      if (!el.getAttribute("stroke-width")) {
+        el.setAttribute("stroke-width", "1.5");
       }
     });
   });
@@ -58,15 +60,13 @@ function applyLegendColors(items, scopeEl) {
 
 export default function Legend({
   locale = "en",
-  /** CSS selector that wraps your rendered SVG. Defaults to a common wrapper you use. */
   mapScopeSelector = ".map-wrap, #map-root, main",
 }) {
   const [items, setItems] = useState([]);
-  const [status, setStatus] = useState("idle"); // idle | loading | ready | error
+  const [status, setStatus] = useState("idle");
   const scopeRef = useRef(null);
   const observerRef = useRef(null);
 
-  // Build fetch order: locale first, then English fallback.
   const urls = useMemo(
     () => [
       `/data/legend/legendItems.${locale}.json`,
@@ -75,7 +75,7 @@ export default function Legend({
     [locale]
   );
 
-  // Resolve scope element after mount
+  // Resolve SVG scope
   useEffect(() => {
     const resolved =
       document.querySelector(mapScopeSelector) ||
@@ -85,7 +85,7 @@ export default function Legend({
     scopeRef.current = resolved;
   }, [mapScopeSelector]);
 
-  // Load legend items
+  // Load legend data
   useEffect(() => {
     let cancelled = false;
     const controller = new AbortController();
@@ -94,10 +94,7 @@ export default function Legend({
       setStatus("loading");
       for (const url of urls) {
         try {
-          const res = await fetch(url, {
-            signal: controller.signal,
-            cache: "force-cache",
-          });
+          const res = await fetch(url, { signal: controller.signal, cache: "no-store" });
           if (!res.ok) continue;
           const data = await res.json();
           if (!cancelled) {
@@ -118,16 +115,13 @@ export default function Legend({
     };
   }, [urls]);
 
-  // Apply colors when items are ready AND whenever the SVG content changes.
+  // Paint colors and re-paint on mutations
   useEffect(() => {
     if (status !== "ready" || !scopeRef.current) return;
-
     const scopeEl = scopeRef.current;
 
-    // Initial paint
     applyLegendColors(items, scopeEl);
 
-    // Repaint on DOM changes inside the scope (e.g., InlineSvg loads/updates)
     if (observerRef.current) observerRef.current.disconnect();
     const obs = new MutationObserver(() => applyLegendColors(items, scopeEl));
     observerRef.current = obs;
@@ -141,42 +135,47 @@ export default function Legend({
     return () => obs.disconnect();
   }, [status, items]);
 
+  /** Reusable row renderer */
+  const Row = ({ it }) => {
+    const norm = labelToClass(it.label);
+    const swatchClass = [styles.swatch, styles[norm]].filter(Boolean).join(" ");
+    return (
+      <li className={styles.item}>
+        <span
+          className={swatchClass}
+          style={{ background: normalizeColor(it.color) }}
+          aria-hidden="true"
+          title={`.${norm}`}
+        />
+        <span>{it.label}</span>
+      </li>
+    );
+  };
+
   return (
-    <aside
-      id="map-legend"
-      className={styles.legend}
-      aria-label="Map legend"
-      role="complementary"
-    >
-      <div className={styles.header}>
-        <h2>Legend</h2>
-      </div>
+    <aside id="map-legend" className={styles.legend} aria-label="Map legend" role="complementary">
+      <div className={styles.header}><h2>Legend</h2></div>
 
       {status === "loading" && (
         <ul className={styles.list}>
-          <li className={styles.item}>
-            <span className={styles.swatch} aria-hidden="true" />
-            Loading…
-          </li>
+          <li className={styles.item}><span className={styles.swatch} />Loading…</li>
         </ul>
       )}
 
       {status === "ready" && (
         <ul className={styles.list}>
-          {items.map((it) => {
-            const cls = labelToClass(it.label);
-            return (
-              <li key={it.label} className={styles.item}>
-                <span
-                  className={styles.swatch}
-                  style={{ background: normalizeColor(it.color) }}
-                  aria-hidden="true"
-                  title={`.${cls}`}
-                />
-                <span>{it.label}</span>
-              </li>
-            );
-          })}
+          {items.map((it) => (
+            <li key={it.label} className={styles.group}>
+              <Row it={it} />
+              {Array.isArray(it.children) && it.children.length > 0 && (
+                <ul className={styles.sublist}>
+                  {it.children.map((child) => (
+                    <Row key={child.label} it={child} />
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
         </ul>
       )}
 

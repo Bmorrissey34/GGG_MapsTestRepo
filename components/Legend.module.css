@@ -1,31 +1,40 @@
-/* Legend.module.css */
+/* Legend.module.css
+   
+*/
 
-/* Legend: fixed, always visible (top-right) */
+/* ——— Panel container ——— */
 .legend {
   position: fixed;
-  top: 8rem;
-  right: 8rem;
+  top: 8rem;             
+  right: 8rem;             
   width: min(92vw, 320px);
   max-height: 60vh;
   background: #ffffff;
   color: #111827;
   border-radius: 12px;
   box-shadow: 0 12px 28px rgba(0,0,0,0.25);
-  overflow: hidden;
+  overflow: hidden;         /* header stays visible, list scrolls */
   z-index: 2147483646;
 }
 
-/* Header */
+/* ——— Header ——— */
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* future-proof if you add actions */
+  justify-content: space-between;
   padding: 10px 12px;
   border-bottom: 1px solid #e5e7eb;
   background: #f9fafb;
 }
 
-/* List */
+.header h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #065f46;         
+}
+
+/* ——— Lists ——— */
 .list {
   margin: 0;
   padding: 8px 12px;
@@ -34,52 +43,83 @@
   overflow: auto;
 }
 
+/* A “group” is a top-level item that may contain a nested sublist */
+.group {
+  margin: 0 0 2px 0;
+}
+
+/* Nested sub-items (Parking → Reserved/Residents/Students/Handicap) */
+.sublist {
+  list-style: none;
+  margin: 0 0 4px 22px;     /* indent under the parent row */
+  padding: 0 0 0 10px;
+  border-left: 1px solid #e5e7eb; /* subtle guide line */
+}
+
+/* ——— Rows ——— */
 .item {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 8px 4px;
+  padding: 6px 4px;
+  line-height: 1.2;
+  border-radius: 6px;
 }
 
+/* Small hover/focus affordance for readability */
+.item:hover,
+.item:focus-within {
+  background: #f3f4f6;
+}
+
+/* Make top-level labels slightly stronger */
+.group > .item > span:last-child {
+  font-weight: 600;
+}
+
+/* ——— Swatch (the colored dot) ——— */
 .swatch {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
-  border: 1px solid #e5e7eb;
-  flex: 0 0 16px;
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 8px;
+  border: 1px solid rgba(0,0,0,0.25);
+  flex: 0 0 14px;           /* keep dot from stretching */
 }
 
-/* Swatch color overrides to match map */
-.academic {
-  background: #004d26; /* Dark green - Academic Building */
+
+/* ——— Scrollbar polish (optional) ——— */
+.list::-webkit-scrollbar {
+  width: 10px;
+}
+.list::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 999px;
+  border: 2px solid #fff;
+}
+.list::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.services {
-  background: #b3d9a5; /* Light green - Student Services */
-}
-
-.parking {
-  background: #f2b5b0; /* Pinkish red - Parking */
-}
-
-.restricted {
-  background: #808080; /* Gray - Restricted Area */
-}
-
-/* Optional footer/button */
-.more {
-  width: 100%;
-  border: none;
-  background: #111827;
-  color: #fff;
-  padding: 10px 12px;
-  cursor: pointer;
-}
-
-/* Remove any FAB/close/toggle artifacts if they existed */
-.fab,
-.show,
-.hide,
-.close {
-  display: none !important;
+/* ——— Dark mode (optional) ——— */
+@media (prefers-color-scheme: dark) {
+  .legend {
+    background: #111827;
+    color: #f9fafb;
+  }
+  .header {
+    background: #0f172a;
+    border-bottom-color: #1f2937;
+  }
+  .item:hover,
+  .item:focus-within {
+    background: #1f2937;
+  }
+  .sublist {
+    border-left-color: #1f2937;
+  }
+  .swatch {
+    border-color: rgba(255,255,255,0.25);
+  }
 }
