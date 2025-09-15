@@ -64,7 +64,6 @@ export default function ZoomPan({
       captured: false,
       dragged: false
     };
-    // Do NOT setPointerCapture yet; wait until the user actually drags
   };
 
   // Handle pointer move event
