@@ -7,7 +7,8 @@ import PageContainer from './PageContainer';
 // FloorMapView component for rendering an interactive floor map
 export default function FloorMapView({ src, interactiveSelector = '.room-group, .room, .label' }) {
   const [selectedId, setSelectedId] = useState(null); // State to track the selected room ID
-  const svgRef = useRef(null); // Reference to the SVG element
+  const [svgContent, setSvgContent] = useState('');
+  const containerRef = useRef(null);
 
   // Content for the header providing user instructions
   const headerContent = <span className="text-muted small">Scroll/pinch to zoom • drag to pan</span>;
@@ -19,54 +20,59 @@ export default function FloorMapView({ src, interactiveSelector = '.room-group, 
     }
   };
 
+  // Load SVG as text so events bubble to ZoomPan
   useEffect(() => {
-    const handleSvgLoad = () => {
-      const svgElement = svgRef.current;
-      if (!svgElement) return;
-
-      // Get the SVG document
-      const svgDoc = svgElement.contentDocument;
-      if (!svgDoc) return;
-
-      // Add click event listener to prevent default navigation
-      svgDoc.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default behavior (navigation)
-        e.stopPropagation(); // Stop event from bubbling
-
-        // Find the closest interactive element
-        const target = e.target.closest('g[id], rect[id], path[id], circle[id], polygon[id]');
-        if (target && target.id) {
-          handleSelect(target.id); // Select the room if an interactive element is clicked
-        }
-      });
-
-      // Remove any existing href attributes that cause navigation
-      const links = svgDoc.querySelectorAll('a[href]');
-      links.forEach(link => {
-        const href = link.getAttribute('href');
-        if (href) {
-          link.setAttribute('data-original-href', href); // Store original href
-          link.removeAttribute('href'); // Remove href to prevent navigation
-        }
-      });
-    };
-
-    const svgElement = svgRef.current;
-    if (svgElement) {
-      svgElement.addEventListener('load', handleSvgLoad);
-      
-      // If already loaded
-      if (svgElement.contentDocument) {
-        handleSvgLoad();
+    let isMounted = true;
+    (async () => {
+      try {
+        const res = await fetch(src, { cache: 'no-cache' });
+        const text = await res.text();
+        if (isMounted) setSvgContent(text);
+      } catch {
+        if (isMounted) setSvgContent('<svg xmlns="http://www.w3.org/2000/svg"><text x="10" y="20">Failed to load map</text></svg>');
       }
+    })();
+    return () => { isMounted = false; };
+  }, [src]);
+
+  // Post-process injected SVG: sizing, disable links, and click selection
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container || !svgContent) return;
+
+    // Normalize SVG sizing for responsive layout
+    const svg = container.querySelector('svg');
+    if (svg) {
+      svg.removeAttribute('width');
+      svg.removeAttribute('height');
+      svg.style.width = '100%';
+      svg.style.height = 'auto';
+      svg.style.display = 'block';
     }
 
-    return () => {
-      if (svgElement) {
-        svgElement.removeEventListener('load', handleSvgLoad); // Cleanup event listener
+    // Disable navigation inside the SVG
+    container.querySelectorAll('a[href]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href) {
+        link.setAttribute('data-original-href', href);
+        link.removeAttribute('href');
+      }
+    });
+
+    // Delegate click to capture element IDs
+    const onClick = (e) => {
+      const target =
+        e.target.closest(interactiveSelector) ||
+        e.target.closest('[id]');
+      if (target) {
+        e.preventDefault();
+        handleSelect(target.id || target.getAttribute('id'));
       }
     };
-  }, [src]);
+
+    container.addEventListener('click', onClick);
+    return () => container.removeEventListener('click', onClick);
+  }, [svgContent, interactiveSelector]);
 
   return (
     // Render the floor map viewer with zoom/pan functionality and selection handling
@@ -79,12 +85,12 @@ export default function FloorMapView({ src, interactiveSelector = '.room-group, 
           className="w-100"
           disableDoubleClickZoom={true} // Disable double-click zoom
         >
-          <object 
-            ref={svgRef}
-            data={src} // Path to the SVG file representing the floor map
-            type="image/svg+xml"
-            className="w-100 h-auto" // Ensure the SVG scales properly
+          {/* Replaces <object> with inline SVG so pan/zoom work */}
+          <div
+            ref={containerRef}
+            className="w-100 h-auto"
             style={{ pointerEvents: 'auto' }}
+            dangerouslySetInnerHTML={{ __html: svgContent }}
           />
         </ZoomPan>
       </PageContainer>
