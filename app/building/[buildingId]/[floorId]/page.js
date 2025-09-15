@@ -1,12 +1,12 @@
 import FloorViewerPage from '../../../../components/pages/FloorViewerPage';
-import buildings from '../../../../data/buildings.json';
+import { generateBuildingFloorStaticParams } from '../../../../lib/campus';
 
+// Generate static parameters for building and floor pages during build time
 export function generateStaticParams() {
-  const params = [];
-  for (const b of buildings) for (const f of b.floors) params.push({ buildingId: b.id, floorId: f.id });
-  return params;
+  return generateBuildingFloorStaticParams();
 }
 
 export default function Page({ params }) {
+  // Render the FloorViewerPage component with the buildingId and floorId from the dynamic route parameters
   return <FloorViewerPage buildingId={params.buildingId} floorId={params.floorId} />;
 }

@@ -8,11 +8,11 @@ export default function Header() {
       <div className="container">
         <Link href="/" className="header-logo-link">
           <Image
-            src="/images/ggc-logo.png" // <-- IMPORTANT: Replace with your logo's path
+            src="/images/ggc-logo.png" 
             alt="GGC Logo"
-            width={40} // Adjust width as needed
-            height={40} // Adjust height as needed
-            priority // Makes the logo load faster
+            width={40} 
+            height={40} 
+            priority 
             style={{border: "var(--justin-globe3-border)"}}
           />
           <span className="header-title">GGC Maps</span>
