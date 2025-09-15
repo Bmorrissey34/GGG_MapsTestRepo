@@ -2,6 +2,7 @@
 import Find from "../components/Find";
 import Links from "../components/Links";
 
+// PageContainer component serves as a layout wrapper for pages
 export default function PageContainer({ title, headerContent, children, className }) {
   // Combine default classes with any custom classes passed in as props
   const containerClasses = `container py-3 ${className || ''}`;
@@ -20,8 +21,8 @@ export default function PageContainer({ title, headerContent, children, classNam
         >
           {title}
         </h1>
-        <Find />
-        {headerContent}
+        <Find /> {/* Search component */}
+        {headerContent} {/* Optional additional header content */}
       </div>
 
       {/* Main content area with a white background and rounded border */}
@@ -29,11 +30,11 @@ export default function PageContainer({ title, headerContent, children, classNam
         className="border rounded-3"
         style={{ overflow: 'hidden', background: 'white' }}
       >
-        {children}
+        {children} {/* Render child components */}
       </div>
 
       {/* Footer section with Links component */}
-      <Links />
+      <Links /> {/* Navigation links */}
     </main>
   );
 }

@@ -1,6 +1,7 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+// ZoomPan component allows for zooming and panning of its children
 export default function ZoomPan({
   children,
   className = '',
@@ -15,10 +16,10 @@ export default function ZoomPan({
   const [scale, setScale] = useState(initialScale);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
-  // Utility function to clamp a value between a minimum and maximum range
+  // Clamp value between min and max
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
-  // Function to adjust the scale at a specific point (cx, cy) while keeping the cursor anchored
+  // Set scale at a specific point
   const setScaleAt = useCallback(
     (next, cx, cy) => {
       const vp = viewportRef.current;
@@ -30,7 +31,6 @@ export default function ZoomPan({
       const prev = scale;
       next = clamp(next, minScale, maxScale);
 
-      // Calculate the positional adjustments to keep the cursor anchored
       const dx = px / prev - px / next;
       const dy = py / prev - py / next;
       setPos((p) => ({ x: p.x + dx, y: p.y + dy }));
@@ -40,9 +40,19 @@ export default function ZoomPan({
   );
 
   // ----- Pointer drag pan -----
-  const drag = useRef({ active: false, id: null, startX: 0, startY: 0, origX: 0, origY: 0 });
+  const drag = useRef({
+    active: false,
+    id: null,
+    startX: 0,
+    startY: 0,
+    origX: 0,
+    origY: 0,
+    captured: false,
+    dragged: false
+  });
+  const TAP_SLOP = 4; // px before we consider it a drag
 
-  // Start dragging when the pointer is pressed down
+  // Handle pointer down event
   const onPointerDown = (e) => {
     drag.current = {
       active: true,
@@ -50,22 +60,57 @@ export default function ZoomPan({
       startX: e.clientX,
       startY: e.clientY,
       origX: pos.x,
-      origY: pos.y
+      origY: pos.y,
+      captured: false,
+      dragged: false
     };
-    e.currentTarget.setPointerCapture(e.pointerId);
+    // Do NOT setPointerCapture yet; wait until the user actually drags
   };
 
-  // Update position while dragging
+  // Handle pointer move event
   const onPointerMove = (e) => {
     if (!drag.current.active || drag.current.id !== e.pointerId) return;
     const dx = e.clientX - drag.current.startX;
     const dy = e.clientY - drag.current.startY;
-    setPos({ x: drag.current.origX + dx / scale, y: drag.current.origY + dy / scale });
+    const dist = Math.hypot(dx, dy);
+
+    // Acquire capture only after moving past the threshold
+    if (!drag.current.captured && dist > TAP_SLOP) {
+      drag.current.captured = true;
+      drag.current.dragged = true;
+      e.currentTarget.setPointerCapture(e.pointerId);
+    }
+
+    if (drag.current.captured) {
+      setPos({
+        x: drag.current.origX + dx / scale,
+        y: drag.current.origY + dy / scale
+      });
+    }
   };
 
-  // Stop dragging when the pointer is released
+  // Handle pointer up event
   const onPointerUp = (e) => {
-    if (drag.current.id === e.pointerId) drag.current.active = false;
+    if (drag.current.id === e.pointerId) {
+      if (drag.current.captured) {
+        try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
+      }
+      // Reset; if not dragged, the native click will go to the SVG target
+      drag.current.active = false;
+      drag.current.captured = false;
+      // If it was a drag, suppress the synthetic click on the container
+      drag.current._suppressClickOnce = drag.current.dragged;
+      drag.current.dragged = false;
+    }
+  };
+
+  // Suppress container-level click after a drag so it doesn’t interfere
+  const onClickCapture = (e) => {
+    if (drag.current._suppressClickOnce) {
+      drag.current._suppressClickOnce = false;
+      e.stopPropagation();
+      e.preventDefault();
+    }
   };
 
   // ----- Non-passive wheel + touchmove listeners -----
@@ -73,14 +118,14 @@ export default function ZoomPan({
     const el = viewportRef.current;
     if (!el) return;
 
+    // Handle wheel event for zooming
     const onWheel = (e) => {
-      // Prevent default behavior to stop page scroll while zooming
       e.preventDefault();
       const dir = e.deltaY < 0 ? 1 : -1;
       setScaleAt(scale * (1 + wheelStep * dir), e.clientX, e.clientY);
     };
 
-    // Prevent page scroll during pinch gestures on some mobile browsers
+    // Prevent default touchmove behavior for multi-touch
     const onTouchMove = (e) => {
       if (e.touches && e.touches.length > 1) {
         e.preventDefault();
@@ -96,28 +141,23 @@ export default function ZoomPan({
     };
   }, [scale, wheelStep, setScaleAt]);
 
-  // ----- Double click zoom -----
+  // Handle double-click event for zooming
   const onDoubleClick = (e) => {
-    if (disableDoubleClickZoom) return; // Skip zooming if double-click zoom is disabled
+    if (disableDoubleClickZoom) return;
     e.preventDefault();
     setScaleAt(scale * (1 + dblClickStep), e.clientX, e.clientY);
   };
 
-  // ----- Keyboard helpers -----
+  // Handle keyboard events for zooming and panning
   useEffect(() => {
     const onKey = (e) => {
-      // Ignore key events if the focus is on an input or textarea
       if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
-
-      // Zoom in/out or reset scale using keyboard shortcuts
       if (e.key === '+' || e.key === '=') setScaleAt(scale * (1 + wheelStep), innerWidth / 2, innerHeight / 2);
       if (e.key === '-' || e.key === '_') setScaleAt(scale * (1 - wheelStep), innerWidth / 2, innerHeight / 2);
       if (e.key === '0') {
         setScale(1);
         setPos({ x: 0, y: 0 });
       }
-
-      // Pan the viewport using arrow keys
       if (e.key === 'ArrowLeft') setPos((p) => ({ ...p, x: p.x + 30 / scale }));
       if (e.key === 'ArrowRight') setPos((p) => ({ ...p, x: p.x - 30 / scale }));
       if (e.key === 'ArrowUp') setPos((p) => ({ ...p, y: p.y + 30 / scale }));
@@ -137,12 +177,14 @@ export default function ZoomPan({
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
+      onClickCapture={onClickCapture}
       style={{
         position: 'relative',
         overflow: 'hidden',
         touchAction: 'none',
-        overscrollBehavior: 'contain', // Prevent page scroll/refresh bounce during wheel/pinch
-        background: 'white'
+        overscrollBehavior: 'contain',
+        background: 'white',
+        cursor: drag.current.captured ? 'grabbing' : 'grab'
       }}
     >
       <div

@@ -21,6 +21,7 @@ function inferKind(el) {
   return 'poi';
 }
 
+// InlineSvg component renders an SVG file and adds interactivity
 export default function InlineSvg({
   src, // Path to the SVG file
   className = '', // Additional CSS classes for styling
@@ -29,44 +30,44 @@ export default function InlineSvg({
   onSelect, // Callback for when an element is selected
   onReady, // Callback for when the SVG is ready
 }) {
-  const ref = useRef(null);
+  const ref = useRef(null); // Reference to the SVG container
   const [markup, setMarkup] = useState(null); // State to store the sanitized SVG markup
   const [error, setError] = useState(null); // State to store any loading errors
   const prev = useRef(null); // Reference to the previously selected element
 
   // Fetch and sanitize the SVG content when the source changes
   useEffect(() => {
-    let alive = true;
-    setMarkup(null);
-    setError(null);
-    fetch(src, { cache: 'no-store' })
-      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); })
-      .then(t => { if (alive) setMarkup(sanitize(t)); })
-      .catch(err => { if (alive) setError(err.message); });
-    return () => { alive = false; };
+    let alive = true; // Flag to track component lifecycle
+    setMarkup(null); // Reset markup state
+    setError(null); // Reset error state
+    fetch(src, { cache: 'no-store' }) // Fetch the SVG file
+      .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.text(); }) // Check response status
+      .then(t => { if (alive) setMarkup(sanitize(t)); }) // Set sanitized markup
+      .catch(err => { if (alive) setError(err.message); }); // Handle errors
+    return () => { alive = false; }; // Cleanup function
   }, [src]);
 
   // Add interactivity and accessibility to the SVG elements
   useEffect(() => {
-    if (!markup || !ref.current) return;
-    const root = ref.current;
+    if (!markup || !ref.current) return; // Ensure markup and ref are available
+    const root = ref.current; // Reference to the SVG root element
 
     // Handle click events on interactive elements
     const click = (e) => {
-      const el = e.target.closest(interactiveSelector);
+      const el = e.target.closest(interactiveSelector); // Find closest interactive element
       if (el) {
         const normalizedId = el.id ? el.id.toLowerCase() : null; // Normalize the ID to lowercase
-        onSelect?.(normalizedId, el);
+        onSelect?.(normalizedId, el); // Call onSelect callback
       }
     };
 
     // Handle keyboard events for accessibility
     const key = (e) => {
-      const el = e.target.closest(interactiveSelector);
-      if (!el) return;
+      const el = e.target.closest(interactiveSelector); // Find closest interactive element
+      if (!el) return; // Exit if no element found
       if (e.key === 'Enter' || e.key === ' ') { 
-        e.preventDefault(); 
-        onSelect?.(el.id || null, el); 
+        e.preventDefault(); // Prevent default action
+        onSelect?.(el.id || null, el); // Call onSelect callback
       }
     };
 
@@ -75,20 +76,20 @@ export default function InlineSvg({
       el.hasAttribute('tabindex') || el.setAttribute('tabindex', '0'); // Make elements focusable
       el.hasAttribute('role') || el.setAttribute('role', 'button'); // Add a button role
       if (!el.hasAttribute('aria-label')) {
-        const t = el.querySelector('text');
-        el.setAttribute('aria-label', (t && t.textContent.trim()) || el.id || 'map element');
+        const t = el.querySelector('text'); // Get text content for aria-label
+        el.setAttribute('aria-label', (t && t.textContent.trim()) || el.id || 'map element'); // Set aria-label
       }
     });
 
-    root.addEventListener('click', click);
-    root.addEventListener('keydown', key);
+    root.addEventListener('click', click); // Add click event listener
+    root.addEventListener('keydown', key); // Add keydown event listener
 
     // Report the IDs of interactive elements to the parent component
     if (onReady) {
       const items = Array.from(root.querySelectorAll(interactiveSelector))
-        .filter(el => el.id && String(el.id).trim().length > 0)
+        .filter(el => el.id && String(el.id).trim().length > 0) // Filter elements with valid IDs
         .map(el => {
-          const label = el.querySelector('text')?.textContent?.trim() || '';
+          const label = el.querySelector('text')?.textContent?.trim() || ''; // Get label text
           return {
             id: el.id, // Element ID
             kind: inferKind(el), // Inferred type of the element
@@ -96,49 +97,49 @@ export default function InlineSvg({
             svg: src, // Source of the SVG
           };
         });
-      onReady(items);
+      onReady(items); // Call onReady callback with items
     }
 
     return () => {
-      root.removeEventListener('click', click);
-      root.removeEventListener('keydown', key);
+      root.removeEventListener('click', click); // Cleanup click event listener
+      root.removeEventListener('keydown', key); // Cleanup keydown event listener
     };
   }, [markup, interactiveSelector, onSelect, onReady, src]);
 
   // Highlight the selected element and remove highlighting from the previous one
   useEffect(() => {
-    const root = ref.current;
-    if (!root) return;
+    const root = ref.current; // Reference to the SVG root element
+    if (!root) return; // Exit if root is not available
     if (prev.current) {
-      const p = root.querySelector(`#${CSS.escape(prev.current)}`);
+      const p = root.querySelector(`#${CSS.escape(prev.current)}`); // Find previous element
       if (p) { 
-        p.classList.remove('active-room'); 
-        p.setAttribute('aria-selected','false'); 
+        p.classList.remove('active-room'); // Remove active class
+        p.setAttribute('aria-selected','false'); // Update aria-selected attribute
       }
     }
     if (selectedId) {
-      const el = root.querySelector(`#${CSS.escape(selectedId)}`);
+      const el = root.querySelector(`#${CSS.escape(selectedId)}`); // Find currently selected element
       if (el) { 
-        el.classList.add('active-room'); 
-        el.setAttribute('aria-selected','true'); 
+        el.classList.add('active-room'); // Add active class
+        el.setAttribute('aria-selected','true'); // Update aria-selected attribute
       }
-      prev.current = selectedId;
+      prev.current = selectedId; // Update previous ID
     } else {
-      prev.current = null;
+      prev.current = null; // Reset previous ID
     }
   }, [selectedId]);
 
   // Error handling: log the error and display a fallback UI
   if (error) {
-    console.error('Error loading SVG:', error);
-    return <div className="svg-error">Error loading SVG: {error}</div>;
+    console.error('Error loading SVG:', error); // Log error
+    return <div className="svg-error">Error loading SVG: {error}</div>; // Display error message
   }
 
   return (
     <div
-      ref={ref}
-      className={`inline-svg ${className}`}
-      dangerouslySetInnerHTML={{ __html: markup }}
+      ref={ref} // Reference to the SVG container
+      className={`inline-svg ${className}`} // Apply class names
+      dangerouslySetInnerHTML={{ __html: markup }} // Set inner HTML to sanitized markup
       style={{ isolation: 'isolate' }} // Contain the shadow DOM
     />
   );

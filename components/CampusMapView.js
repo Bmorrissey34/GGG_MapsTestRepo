@@ -10,6 +10,7 @@ import ZoomPan from './ZoomPan';
 import PageContainer from './PageContainer';
 import buildings from '../data/buildings.json';
 
+// CampusMapView component displays the campus map with interactive elements
 export default function CampusMapView({
   src = '/BuildingMaps/(Campus)/Campus.svg', // Default path to the campus map SVG
   interactiveSelector = '.building-group, .building', // CSS selector for interactive elements
@@ -61,10 +62,9 @@ export default function CampusMapView({
 
       {/* Legend component for coloring and labeling map elements */}
       <Legend
-        locale={
-          typeof navigator !== 'undefined'
-            ? navigator.language.split('-')[0] // Use the browser's language setting
-            : 'en' // Default to English if navigator is unavailable
+        locale={typeof navigator !== 'undefined'
+          ? navigator.language.split('-')[0] // Use the browser's language setting
+          : 'en' // Default to English if navigator is unavailable
         }
         mapScopeSelector=".map-wrap svg" // Scope the legend to the SVG inside the map-wrap
       />
