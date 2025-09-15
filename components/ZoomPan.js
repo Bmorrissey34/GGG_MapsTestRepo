@@ -8,14 +8,17 @@ export default function ZoomPan({
   maxScale = 4,
   initialScale = 1,
   wheelStep = 0.15,
-  dblClickStep = 0.5
+  dblClickStep = 0.5,
+  disableDoubleClickZoom = false // Prop to enable/disable double-click zoom functionality
 }) {
   const viewportRef = useRef(null);
   const [scale, setScale] = useState(initialScale);
   const [pos, setPos] = useState({ x: 0, y: 0 });
 
+  // Utility function to clamp a value between a minimum and maximum range
   const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
+  // Function to adjust the scale at a specific point (cx, cy) while keeping the cursor anchored
   const setScaleAt = useCallback(
     (next, cx, cy) => {
       const vp = viewportRef.current;
@@ -27,7 +30,7 @@ export default function ZoomPan({
       const prev = scale;
       next = clamp(next, minScale, maxScale);
 
-      // keep cursor anchored while zooming
+      // Calculate the positional adjustments to keep the cursor anchored
       const dx = px / prev - px / next;
       const dy = py / prev - py / next;
       setPos((p) => ({ x: p.x + dx, y: p.y + dy }));
@@ -39,6 +42,7 @@ export default function ZoomPan({
   // ----- Pointer drag pan -----
   const drag = useRef({ active: false, id: null, startX: 0, startY: 0, origX: 0, origY: 0 });
 
+  // Start dragging when the pointer is pressed down
   const onPointerDown = (e) => {
     drag.current = {
       active: true,
@@ -51,6 +55,7 @@ export default function ZoomPan({
     e.currentTarget.setPointerCapture(e.pointerId);
   };
 
+  // Update position while dragging
   const onPointerMove = (e) => {
     if (!drag.current.active || drag.current.id !== e.pointerId) return;
     const dx = e.clientX - drag.current.startX;
@@ -58,6 +63,7 @@ export default function ZoomPan({
     setPos({ x: drag.current.origX + dx / scale, y: drag.current.origY + dy / scale });
   };
 
+  // Stop dragging when the pointer is released
   const onPointerUp = (e) => {
     if (drag.current.id === e.pointerId) drag.current.active = false;
   };
@@ -68,13 +74,13 @@ export default function ZoomPan({
     if (!el) return;
 
     const onWheel = (e) => {
-      // We **need** preventDefault to stop page scroll while zooming
+      // Prevent default behavior to stop page scroll while zooming
       e.preventDefault();
       const dir = e.deltaY < 0 ? 1 : -1;
       setScaleAt(scale * (1 + wheelStep * dir), e.clientX, e.clientY);
     };
 
-    // Some mobile browsers still deliver pinch as touchmove; block page scroll
+    // Prevent page scroll during pinch gestures on some mobile browsers
     const onTouchMove = (e) => {
       if (e.touches && e.touches.length > 1) {
         e.preventDefault();
@@ -90,8 +96,9 @@ export default function ZoomPan({
     };
   }, [scale, wheelStep, setScaleAt]);
 
-  // ----- Double click zoom (ok to use React handler) -----
+  // ----- Double click zoom -----
   const onDoubleClick = (e) => {
+    if (disableDoubleClickZoom) return; // Skip zooming if double-click zoom is disabled
     e.preventDefault();
     setScaleAt(scale * (1 + dblClickStep), e.clientX, e.clientY);
   };
@@ -99,18 +106,24 @@ export default function ZoomPan({
   // ----- Keyboard helpers -----
   useEffect(() => {
     const onKey = (e) => {
+      // Ignore key events if the focus is on an input or textarea
       if (['INPUT', 'TEXTAREA'].includes(e.target.tagName)) return;
+
+      // Zoom in/out or reset scale using keyboard shortcuts
       if (e.key === '+' || e.key === '=') setScaleAt(scale * (1 + wheelStep), innerWidth / 2, innerHeight / 2);
       if (e.key === '-' || e.key === '_') setScaleAt(scale * (1 - wheelStep), innerWidth / 2, innerHeight / 2);
       if (e.key === '0') {
         setScale(1);
         setPos({ x: 0, y: 0 });
       }
+
+      // Pan the viewport using arrow keys
       if (e.key === 'ArrowLeft') setPos((p) => ({ ...p, x: p.x + 30 / scale }));
       if (e.key === 'ArrowRight') setPos((p) => ({ ...p, x: p.x - 30 / scale }));
       if (e.key === 'ArrowUp') setPos((p) => ({ ...p, y: p.y + 30 / scale }));
       if (e.key === 'ArrowDown') setPos((p) => ({ ...p, y: p.y - 30 / scale }));
     };
+
     addEventListener('keydown', onKey);
     return () => removeEventListener('keydown', onKey);
   }, [scale, setScaleAt, wheelStep]);
@@ -128,8 +141,7 @@ export default function ZoomPan({
         position: 'relative',
         overflow: 'hidden',
         touchAction: 'none',
-        // Prevent the page from scrolling/refresh bouncing during wheel/pinch.
-        overscrollBehavior: 'contain',
+        overscrollBehavior: 'contain', // Prevent page scroll/refresh bounce during wheel/pinch
         background: 'white'
       }}
     >

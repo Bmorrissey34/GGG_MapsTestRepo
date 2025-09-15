@@ -9,14 +9,14 @@
   },
   {
     "id": "A",
-    "name": "Administration",
+    "name": "Building A",
     "floors": [
       { "id": "L1", "label": "Level 1", "file": "/BuildingMaps/A/L1.svg" }
     ]
   },
   {
     "id": "B",
-    "name": "Business",
+    "name": "Building B",
     "floors": [
       { "id": "L1", "label": "Level 1", "file": "/BuildingMaps/B/L1.svg" }
     ]
