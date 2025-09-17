@@ -91,6 +91,10 @@ main {
   text-decoration: var(--justin-globe2-under); /* fixed var name */
 }
 
+.header-title:hover{
+  color: aqua;
+}
+
 /* 🌟 Footer Styles */
 .footer {
   background-color: var(--bm-footer-bg);
