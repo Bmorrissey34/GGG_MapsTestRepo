@@ -33,24 +33,31 @@
 .legendHeader {
   display: flex;
   align-items: center;
-  gap: 8px;
-  margin: 0 0 8px 0;
+  justify-content: space-between; /* title left, toggle right */
+  margin-bottom: 8px;
 }
 
 .legendTitle {
-  margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #111827;  /* very dark gray for readability */
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8); /* subtle white glow */
+  font-weight: bold;
+  margin: 0; /* no bottom margin so button aligns nicely */
 }
 
-.legendDot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  flex: 0 0 auto;
-  background: #15803d; /* green-700 */
+/* collapse/expand toggle button */
+.legendToggle {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 2px 6px;
+  border-radius: 6px;
+  color: #0f172a;
+}
+
+.legendToggle:hover,
+.legendToggle:focus-visible {
+  background: #f2f2f2;
+  outline: none;
 }
 
 /* ===== Lists ===== */
