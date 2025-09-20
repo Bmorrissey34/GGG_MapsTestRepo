@@ -1,7 +1,7 @@
 // components/CampusMapView.js
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Legend from './legend';
 import InlineSvg from './InlineSvg';
@@ -19,6 +19,12 @@ const colorMap = {
   "Handicap": "#93c5fd",
   "Restricted Area": "#9ca3af"
 };
+
+const slugifyLabel = (label = '') =>
+  label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
 // CampusMapView component displays the campus map with interactive elements
 export default function CampusMapView({
@@ -44,29 +50,69 @@ export default function CampusMapView({
     }
   };
 
-  // Apply colors to buildings after SVG is loaded
-  useEffect(() => {
+  // Apply the violet palette to housing buildings once the SVG exists
+
+  const applyStudentHousingColors = useCallback(() => {
     const svgRoot = document.querySelector('.map-wrap svg');
     if (!svgRoot) return;
 
-    // Example: If Building 3000 should be Student Housing, give it a class
-    const b3000 = svgRoot.querySelector('#3000, #BUILDING_3000');
-    if (b3000) {
-      b3000.classList.add('student-housing');
-    }
+    const studentHousingSelectors = [
+      "[id='1000']",
+      "[id='2000']",
+      "[id='3000']",
+      '#BUILDING_1000',
+      '#BUILDING_2000',
+      '#BUILDING_3000',
+      "[id='b1000']",
+      "[id='2']",
+      "[id='3']",
+    ];
 
-    // Apply fill colors based on classes
+    studentHousingSelectors.forEach((selector) => {
+      svgRoot.querySelectorAll(selector).forEach((node) => {
+        node.classList.add('student-housing');
+        if (node.classList.contains('building-group')) {
+          node.querySelectorAll('.building').forEach((child) => {
+            child.classList.add('student-housing');
+          });
+        }
+      });
+    });
+
     Object.entries(colorMap).forEach(([label, color]) => {
-      const cls = label.toLowerCase().replace(/\s+/g, '-'); // e.g. "Student Housing" -> "student-housing"
+      const cls = slugifyLabel(label); // normalize label into a safe CSS class name
+      if (!cls) return;
       svgRoot.querySelectorAll(`.${cls}`).forEach((el) => {
+        if (el.classList.contains('building')) {
+          el.style.fill = color;
+          el.style.stroke = color;
+          return;
+        }
+
+        if (el.classList.contains('building-group')) {
+          el.querySelectorAll('.building').forEach((shape) => {
+            shape.style.fill = color;
+            shape.style.stroke = color;
+          });
+          return;
+        }
+
         el.style.fill = color;
       });
     });
-  }, [src]);
+  }, []);
+
+  useEffect(() => {
+    applyStudentHousingColors();
+  }, [applyStudentHousingColors, src]);
+
+  const handleSvgReady = useCallback(() => {
+    applyStudentHousingColors();
+  }, [applyStudentHousingColors]);
 
   // Content for the header, providing user instructions
   const headerContent = (
-    <span className="text-muted small">Scroll/pinch to zoom • drag to pan</span>
+    <span className="text-muted small">Scroll/pinch to zoom, drag to pan</span>
   );
 
   return (
@@ -86,6 +132,7 @@ export default function CampusMapView({
             interactiveSelector={interactiveSelector} // CSS selector for interactive elements
             selectedId={selectedId} // Currently selected building ID
             onSelect={handleSelect} // Callback for handling building selection
+            onReady={handleSvgReady} // Reapply palette once the SVG markup finishes loading
           />
         </ZoomPan>
       </div>
