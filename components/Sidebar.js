@@ -37,13 +37,13 @@ export default function Sidebar() {
                     <a className="nav-link" href="#">Building E / Student Center</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Building F / Wellness and Recreation Center</a>
+                    <a className="nav-link" href="#">Building F / Wellness & Rec Center</a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#">Building G / Grizzly Athletics</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Building H / Allied Health and Science</a>
+                    <a className="nav-link" href="#">Building H / Allied Health & Science</a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#">Building I</a>
@@ -52,7 +52,7 @@ export default function Sidebar() {
                     <a className="nav-link" href="#">Building L / Library</a>
                 </li>
                 <li className="nav-item">
-                    <a className="nav-link" href="#">Building P / Library</a>
+                    <a className="nav-link" href="#">Building P</a>
                 </li>
                 <li className="nav-item">
                     <a className="nav-link" href="#">Building W</a>
