@@ -34,6 +34,8 @@ export default function InlineSvg({
   const [markup, setMarkup] = useState(null); // State to store the sanitized SVG markup
   const [error, setError] = useState(null); // State to store any loading errors
   const prev = useRef(null); // Reference to the previously selected element
+  const hoverRefs = useRef(new Map()); // Track hover highlight nodes by source
+
 
   // Fetch and sanitize the SVG content when the source changes
   useEffect(() => {
@@ -105,6 +107,90 @@ export default function InlineSvg({
       root.removeEventListener('keydown', key); // Cleanup keydown event listener
     };
   }, [markup, interactiveSelector, onSelect, onReady, src]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const escapeSelector = (value) => {
+      if (value === null || value === undefined) return '';
+      if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
+        return CSS.escape(value);
+      }
+      return String(value).replace(/[^a-zA-Z0-9_-]/g, (char) => `\\${char}`);
+    };
+
+    const clearSource = (source) => {
+      const nodes = hoverRefs.current.get(source);
+      if (nodes) {
+        nodes.forEach((node) => node.classList.remove('hover-highlight'));
+        hoverRefs.current.delete(source);
+      }
+    };
+
+    const clearAll = () => {
+      hoverRefs.current.forEach((nodes) => nodes.forEach((node) => node.classList.remove('hover-highlight')));
+      hoverRefs.current.clear();
+    };
+
+    const collectTargets = ({ selector, ids }) => {
+      const rootEl = ref.current;
+      if (!rootEl) return [];
+      const collected = new Set();
+      if (selector) {
+        rootEl.querySelectorAll(selector).forEach((el) => {
+          collected.add(el.closest('.building-group') || el);
+        });
+      }
+      if (Array.isArray(ids)) {
+        ids.forEach((id) => {
+          if (!id) return;
+          const escaped = escapeSelector(id);
+          if (!escaped) return;
+          const found = rootEl.querySelector(`#${escaped}`);
+          if (found) {
+            collected.add(found.closest('.building-group') || found);
+          }
+        });
+      }
+      return Array.from(collected).filter(Boolean);
+    };
+
+    const handleHover = (event) => {
+      const detail = event.detail || {};
+      const { source } = detail;
+      if (!source) return;
+      clearSource(source);
+      const targets = collectTargets(detail);
+      if (targets.length) {
+        targets.forEach((node) => node.classList.add('hover-highlight'));
+        hoverRefs.current.set(source, targets);
+      }
+    };
+
+    const handleHoverClear = (event) => {
+      const detail = event.detail || {};
+      const { source } = detail;
+      if (source) {
+        clearSource(source);
+      } else {
+        clearAll();
+      }
+    };
+
+    window.addEventListener('ggcmap-hover', handleHover);
+    window.addEventListener('ggcmap-hover-clear', handleHoverClear);
+
+    return () => {
+      window.removeEventListener('ggcmap-hover', handleHover);
+      window.removeEventListener('ggcmap-hover-clear', handleHoverClear);
+      clearAll();
+    };
+  }, []);
+
+  useEffect(() => {
+    hoverRefs.current.forEach((nodes) => nodes.forEach((node) => node.classList.remove('hover-highlight')));
+    hoverRefs.current.clear();
+  }, [markup]);
 
   // Highlight the selected element and remove highlighting from the previous one
   useEffect(() => {
