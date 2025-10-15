@@ -196,7 +196,52 @@ main {
   padding: 0;
 }
 
-/* Core layout structure */
+/* Core layout structure - NEW FULLWIDTH LAYOUT */
+.layout-main-fullwidth {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  position: relative;
+}
+
+/* Fullscreen map wrapper */
+.map-wrap-fullscreen {
+  width: 100%;
+  height: calc(100vh - 140px); /* Account for header (~70px) and footer (~70px) */
+  min-height: 500px;
+  overflow: hidden;
+  position: relative;
+  background: #f8f9fa;
+}
+
+/* Map overlays container */
+.map-overlays {
+  position: fixed;
+  pointer-events: none;
+  z-index: 900;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* Floor selection info overlay */
+.floor-selection-info {
+  position: fixed;
+  bottom: 80px;
+  left: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 0.9rem;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+/* OLD LAYOUT (keep for backwards compat if needed) */
 .layout-shell {
   padding-left: clamp(1rem, 3vw, 3rem);
   padding-right: clamp(1rem, 3vw, 3rem);
@@ -232,7 +277,254 @@ main {
   min-height: 0;
 }
 
-/* Sidebar layout */
+/* ========================================
+   HAMBURGER SIDEBAR (NEW OVERLAY STYLE)
+   ======================================== */
+
+/* Hamburger toggle button - fixed in top left over map, below header */
+.hamburger-toggle-btn {
+  position: fixed;
+  top: 90px; /* Position below header */
+  left: 20px;
+  z-index: 1100;
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
+  touch-action: manipulation; /* Optimize for touch */
+}
+
+.hamburger-toggle-btn:hover {
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+}
+
+.hamburger-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.hamburger-toggle-btn i {
+  font-size: 1.5rem;
+  color: #006400;
+  transition: transform 0.2s ease;
+}
+
+/* Overlay backdrop when sidebar is open */
+.hamburger-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1050;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Prevent body scroll when sidebar is open */
+body.sidebar-open {
+  overflow: hidden;
+}
+
+/* Sidebar panel that slides in from left */
+.hamburger-sidebar-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: min(85vw, 360px);
+  background: #ffffff;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.hamburger-sidebar-panel.is-open {
+  transform: translateX(0);
+}
+
+/* Sidebar header */
+.hamburger-sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #006400 0%, #004d00 100%);
+  color: white;
+  flex-shrink: 0;
+}
+
+.hamburger-sidebar-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: white;
+}
+
+.hamburger-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+.hamburger-close-btn:hover {
+  opacity: 1;
+}
+
+/* Sidebar navigation list */
+.hamburger-sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.hamburger-sidebar-nav::-webkit-scrollbar {
+  width: 6px;
+}
+
+.hamburger-sidebar-nav::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.hamburger-sidebar-nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hamburger-nav-item {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.hamburger-nav-link {
+  display: block;
+  padding: 1rem 1.5rem;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.hamburger-nav-link:hover {
+  background: rgba(0, 100, 0, 0.08);
+  color: #006400;
+  padding-left: 2rem;
+}
+
+.hamburger-nav-link.active {
+  background: rgba(0, 100, 0, 0.12);
+  color: #006400;
+  font-weight: 700;
+  border-left: 4px solid #006400;
+}
+
+.hamburger-nav-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: #006400;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .hamburger-sidebar-panel {
+    width: min(90vw, 320px);
+  }
+  
+  .hamburger-toggle-btn {
+    width: 45px;
+    height: 45px;
+    top: 80px; /* Below mobile header */
+    left: 15px;
+  }
+  
+  .hamburger-nav-link {
+    padding: 0.875rem 1.25rem;
+    font-size: 0.95rem;
+  }
+
+  /* Map fullscreen adjustments for mobile */
+  .map-wrap-fullscreen {
+    height: calc(100vh - 100px); /* Adjust for smaller mobile header/footer */
+    min-height: 400px;
+  }
+
+  /* Floor selection info for mobile */
+  .floor-selection-info {
+    bottom: 70px;
+    left: 10px;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+/* Extra small mobile devices */
+@media (max-width: 480px) {
+  .hamburger-toggle-btn {
+    width: 42px;
+    height: 42px;
+    top: 75px; /* Below mobile header */
+    left: 12px;
+  }
+  
+  .hamburger-toggle-btn i {
+    font-size: 1.25rem;
+  }
+
+  .hamburger-sidebar-header {
+    padding: 1rem 1.25rem;
+  }
+
+  .hamburger-sidebar-title {
+    font-size: 1.1rem;
+  }
+
+  .map-wrap-fullscreen {
+    height: calc(100vh - 90px);
+    min-height: 350px;
+  }
+}
+
+/* ========================================
+   OLD SIDEBAR LAYOUT (for reference)
+   ======================================== */
 .sidebar-slot {
   flex: 0 0 var(--sidebar-width);
   max-width: var(--sidebar-width);
@@ -484,9 +776,42 @@ main {
   overflow: visible;
 }
 
-.legend-floating .legend-panel {
-  width: clamp(160px, 18vw, 280px);
-  max-width: min(80vw, 280px);
+/* Floating Legend and Links wrappers - positioned by MapOverlays component */
+.legend-floating-wrapper,
+.links-floating-wrapper {
+  pointer-events: auto;
+}
+
+.legend-floating-wrapper .legend-panel,
+.links-floating-wrapper .legend-panel {
+  width: clamp(200px, 22vw, 320px);
+  max-width: min(85vw, 320px);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Tablet adjustments for floating panels */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .legend-floating-wrapper .legend-panel,
+  .links-floating-wrapper .legend-panel {
+    width: clamp(220px, 25vw, 300px);
+  }
+}
+
+/* Mobile adjustments for floating panels */
+@media (max-width: 768px) {
+  .legend-floating-wrapper .legend-panel,
+  .links-floating-wrapper .legend-panel {
+    width: min(90vw, 280px);
+    max-width: 280px;
+  }
+  
+  /* Ensure panels don't overlap with hamburger button */
+  .legend-floating-wrapper,
+  .links-floating-wrapper {
+    max-width: calc(100vw - 90px); /* Leave space for hamburger button */
+  }
 }
 
 .legend-body[hidden] {

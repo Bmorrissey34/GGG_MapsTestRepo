@@ -22,7 +22,11 @@ const LINKS = [
   },
 ];
 
-export default function Links({ className = '' }) {
+const FLOATING_CONTAINER_STYLE = {
+  pointerEvents: 'auto',
+};
+
+export default function Links({ className = '', floating = false }) {
   const [open, setOpen] = useState(true);
 
   useEffect(() => {
@@ -44,43 +48,55 @@ export default function Links({ className = '' }) {
     .join(' ');
   const toggleLabel = open ? 'Hide helpful links' : 'Show helpful links';
 
+  const panelContent = (
+    <div className={panelClassName}>
+      <div className="legend-header d-flex align-items-center gap-2">
+        <h2 id="helpful-links-title" className="legend-title link-panel-title fw-bold mb-0">
+          Helpful Links
+        </h2>
+        <button
+          type="button"
+          className="legend-toggle ms-auto"
+          onClick={() => setOpen((value) => !value)}
+          aria-expanded={open}
+          aria-controls="helpful-links-body"
+          title={toggleLabel}
+        >
+          <i
+            className={`bi ${open ? 'bi-chevron-right' : 'bi-chevron-left'} legend-toggle-icon`}
+            aria-hidden="true"
+          ></i>
+          <span className="visually-hidden">{toggleLabel}</span>
+        </button>
+      </div>
+      <div id="helpful-links-body" className="legend-body link-panel-body" hidden={!open}>
+        {LINKS.map((link) => (
+          <a
+            key={link.id}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link-panel-button"
+          >
+            <span className="link-panel-button-secondary">For {link.label}</span>
+            <span className="link-panel-button-primary">Click here</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+
+  if (floating) {
+    return (
+      <div className="links-floating-wrapper" style={FLOATING_CONTAINER_STYLE}>
+        {panelContent}
+      </div>
+    );
+  }
+
   return (
     <aside className={slotClassName} aria-labelledby="helpful-links-title">
-      <div className={panelClassName}>
-        <div className="legend-header d-flex align-items-center gap-2">
-          <h2 id="helpful-links-title" className="legend-title link-panel-title fw-bold mb-0">
-            Helpful Links
-          </h2>
-          <button
-            type="button"
-            className="legend-toggle ms-auto"
-            onClick={() => setOpen((value) => !value)}
-            aria-expanded={open}
-            aria-controls="helpful-links-body"
-            title={toggleLabel}
-          >
-            <i
-              className={`bi ${open ? 'bi-chevron-right' : 'bi-chevron-left'} legend-toggle-icon`}
-              aria-hidden="true"
-            ></i>
-            <span className="visually-hidden">{toggleLabel}</span>
-          </button>
-        </div>
-        <div id="helpful-links-body" className="legend-body link-panel-body" hidden={!open}>
-          {LINKS.map((link) => (
-            <a
-              key={link.id}
-              href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="link-panel-button"
-            >
-              <span className="link-panel-button-secondary">For {link.label}</span>
-              <span className="link-panel-button-primary">Click here</span>
-            </a>
-          ))}
-        </div>
-      </div>
+      {panelContent}
     </aside>
   );
 }

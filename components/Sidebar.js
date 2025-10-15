@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { getAllBuildings } from '../lib/campus';
@@ -46,15 +46,50 @@ const dispatchHoverEvent = (type, source, detail) => {
 };
 
 export default function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const handleCollapse = () => {
-    dispatchHoverEvent('ggcmap-hover-clear', 'sidebar:collapse');
-    setCollapsed(true);
+  const handleToggle = () => {
+    if (isOpen) {
+      dispatchHoverEvent('ggcmap-hover-clear', 'sidebar:toggle');
+    }
+    setIsOpen(!isOpen);
   };
 
-  const handleExpand = () => setCollapsed(false);
+  const handleClose = () => {
+    dispatchHoverEvent('ggcmap-hover-clear', 'sidebar:close');
+    setIsOpen(false);
+  };
+
+  // Manage body scroll and click outside
+  useEffect(() => {
+    if (isOpen) {
+      // Prevent body scroll
+      document.body.classList.add('sidebar-open');
+      
+      // Close sidebar when clicking outside
+      const handleClickOutside = (e) => {
+        const sidebar = document.querySelector('.hamburger-sidebar-panel');
+        const toggle = document.querySelector('.hamburger-toggle-btn');
+        if (sidebar && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+          handleClose();
+        }
+      };
+
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => {
+        document.body.classList.remove('sidebar-open');
+        document.removeEventListener('mousedown', handleClickOutside);
+      };
+    } else {
+      document.body.classList.remove('sidebar-open');
+    }
+  }, [isOpen]);
+
+  // Close sidebar on route change
+  useEffect(() => {
+    handleClose();
+  }, [pathname]);
 
   const createHandlers = (item) => {
     const source = `sidebar:${item.key}`;
@@ -68,52 +103,62 @@ export default function Sidebar() {
   };
 
   return (
-    <div className={`sidebar-slot${collapsed ? ' is-collapsed' : ''}`}>
-      {!collapsed ? (
-        <nav className="sidebar" aria-label="Campus navigation">
-          <div className="sidebar-header">
-            <span className="sidebar-title">Explore Campus</span>
-            <button
-              type="button"
-              className="sidebar-collapse"
-              onClick={handleCollapse}
-              aria-label="Collapse sidebar navigation"
-            >
-              <i className="bi bi-chevron-left" aria-hidden="true"></i>
-            </button>
-          </div>
-          <ul className="sidebar-nav">
-            {NAV_ITEMS.map((item) => {
-              const handlers = createHandlers(item);
-              const isActive = pathname === item.path || pathname.startsWith(item.path + '/');
-              const linkClass = `nav-link${isActive ? ' active' : ''}`;
-              return (
-                <li key={item.key} className="nav-item">
-                  <Link
-                    className={linkClass}
-                    href={item.path}
-                    {...handlers}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      ) : (
-        <div className="sidebar-toggle-wrap">
+    <>
+      {/* Hamburger toggle button - positioned in top left */}
+      <button
+        type="button"
+        className="hamburger-toggle-btn"
+        onClick={handleToggle}
+        aria-label="Toggle navigation menu"
+        aria-expanded={isOpen}
+      >
+        <i className={`bi ${isOpen ? 'bi-x-lg' : 'bi-list'}`} aria-hidden="true"></i>
+      </button>
+
+      {/* Overlay backdrop */}
+      {isOpen && (
+        <div 
+          className="hamburger-overlay" 
+          onClick={handleClose}
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Sidebar panel */}
+      <nav 
+        className={`hamburger-sidebar-panel${isOpen ? ' is-open' : ''}`}
+        aria-label="Campus navigation"
+      >
+        <div className="hamburger-sidebar-header">
+          <span className="hamburger-sidebar-title">Explore Campus</span>
           <button
             type="button"
-            className="sidebar-toggle btn btn-sm btn-outline-secondary"
-            onClick={handleExpand}
-            aria-label="Expand sidebar navigation"
+            className="hamburger-close-btn"
+            onClick={handleClose}
+            aria-label="Close navigation menu"
           >
-            <i className="bi bi-chevron-right" aria-hidden="true"></i>
-            <span className="visually-hidden">Expand sidebar navigation</span>
+            <i className="bi bi-x-lg" aria-hidden="true"></i>
           </button>
         </div>
-      )}
-    </div>
+        <ul className="hamburger-sidebar-nav">
+          {NAV_ITEMS.map((item) => {
+            const handlers = createHandlers(item);
+            const isActive = pathname === item.path || pathname.startsWith(item.path + '/');
+            const linkClass = `hamburger-nav-link${isActive ? ' active' : ''}`;
+            return (
+              <li key={item.key} className="hamburger-nav-item">
+                <Link
+                  className={linkClass}
+                  href={item.path}
+                  {...handlers}
+                >
+                  {item.label}
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+    </>
   );
 };

@@ -1,8 +1,8 @@
 'use client';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 
 // ZoomPan component allows for zooming and panning of its children
-export default function ZoomPan({
+const ZoomPan = forwardRef(function ZoomPan({
   children,
   className = '',
   minScale = 0.5,
@@ -14,8 +14,10 @@ export default function ZoomPan({
   showControls = true,
   autoFit = false,
   fitPadding = 24,
-  fitScaleMultiplier = 1
-}) {
+  fitScaleMultiplier = 1,
+  // initMode controls how we position on mount: 'reset' (default), 'autofit', or 'none'
+  initMode = 'reset'
+}, ref) {
   const viewportRef = useRef(null);
   const [scale, setScale] = useState(initialScale);
   const [pos, setPos] = useState({ x: 0, y: 0 });
@@ -193,9 +195,110 @@ export default function ZoomPan({
     userHasDragged.current = false;
   }, [autoFit, fitToBounds, initialScale, minScale, maxScale, getAnchorBounds]);
 
+  // Track if we've done initial positioning
+  const hasInitialized = useRef(false);
+
   useEffect(() => {
+    if (hasInitialized.current) return;
+    if (initMode === 'none') {
+      hasInitialized.current = true;
+      return;
+    }
+    if (initMode === 'autofit') {
+      fitToBounds({ force: true, padding: fitPadding });
+      hasInitialized.current = true;
+      return;
+    }
+    // default behavior: reset to initialScale centered on bounds
     resetView();
-  }, [resetView]);
+    hasInitialized.current = true;
+  }, [initMode, resetView, fitToBounds, fitPadding]);
+
+  // Expose methods to parent components via ref
+  useImperativeHandle(ref, () => ({
+    fitToElement: (element, options = {}) => {
+      const padding = options.padding ?? fitPadding;
+      const scaleMultiplier = options.scaleMultiplier ?? fitScaleMultiplier;
+      
+      const vp = viewportRef.current;
+      if (!vp || !element) return false;
+      
+      const rect = vp.getBoundingClientRect();
+      if (!(rect.width > 0 && rect.height > 0)) return false;
+
+      let bounds;
+      try {
+        if (element instanceof SVGSVGElement) {
+          const viewBox = element.viewBox?.baseVal;
+          if (viewBox && viewBox.width > 0 && viewBox.height > 0) {
+            bounds = {
+              x: viewBox.x,
+              y: viewBox.y,
+              width: viewBox.width,
+              height: viewBox.height
+            };
+          } else {
+            bounds = element.getBBox();
+          }
+        } else if (element instanceof SVGGraphicsElement) {
+          bounds = element.getBBox();
+        } else {
+          return false;
+        }
+      } catch {
+        return false;
+      }
+
+      if (!bounds || bounds.width <= 0 || bounds.height <= 0) return false;
+
+      const safePadding = Math.max(0, padding);
+      const usableWidth = rect.width - safePadding * 2;
+      const usableHeight = rect.height - safePadding * 2;
+      
+      if (!(usableWidth > 0 && usableHeight > 0)) return false;
+
+      const scaleX = usableWidth / bounds.width;
+      const scaleY = usableHeight / bounds.height;
+      const proposedScale = Math.min(scaleX, scaleY) * scaleMultiplier;
+      
+      const nextScale = clamp(proposedScale, minScale, maxScale);
+      const centerX = bounds.x + bounds.width / 2;
+      const centerY = bounds.y + bounds.height / 2;
+
+      const nextPos = {
+        x: rect.width / 2 - nextScale * centerX,
+        y: rect.height / 2 - nextScale * centerY
+      };
+
+      setScale(nextScale);
+      setPos(nextPos);
+      userHasDragged.current = false;
+      hasInitialized.current = true; // Mark as initialized
+      return true;
+    },
+    centerOn: (x, y, targetScale) => {
+      const vp = viewportRef.current;
+      if (!vp) return false;
+      
+      const rect = vp.getBoundingClientRect();
+      const useScale = targetScale ?? scale;
+      
+      const nextPos = {
+        x: rect.width / 2 - useScale * x,
+        y: rect.height / 2 - useScale * y
+      };
+      
+      setPos(nextPos);
+      if (targetScale !== undefined) {
+        setScale(clamp(targetScale, minScale, maxScale));
+      }
+      hasInitialized.current = true; // Mark as initialized
+      return true;
+    },
+    reset: resetView,
+    zoomIn: () => zoomByMultiplier(1.25),
+    zoomOut: () => zoomByMultiplier(0.8)
+  }), [fitPadding, fitScaleMultiplier, minScale, maxScale, scale, resetView, zoomByMultiplier, clamp]);
 
   // ----- Pointer drag pan -----
   const drag = useRef({
@@ -486,4 +589,6 @@ export default function ZoomPan({
       )}
     </div>
   );
-}
+});
+
+export default ZoomPan;

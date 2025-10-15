@@ -72,7 +72,7 @@ export default function CampusMapView({
   const handleSvgReady = useCallback(() => {
     ensureStudentHousingClasses();
 
-    const wrapper = document.querySelector('.map-wrap');
+    const wrapper = document.querySelector('.map-wrap-fullscreen') || document.querySelector('.map-wrap');
     const svgRoot = wrapper?.querySelector('svg');
     if (!svgRoot) return;
 
@@ -90,38 +90,41 @@ export default function CampusMapView({
       mainGroup.removeAttribute('transform');
     }
 
-    if (zoomRef.current && typeof zoomRef.current.fitToElement === 'function') {
-      try {
-        zoomRef.current.fitToElement(svgRoot, {
-          padding: 0,
-          scaleMultiplier: 0.15
-        });
-      } catch {
-        // ignore if not supported
+    // Attempt to center the map with retry logic
+    const attemptFit = (attempt = 0) => {
+        if (attempt > 3) return; // Max 3 attempts
+      
+      if (zoomRef.current && typeof zoomRef.current.fitToElement === 'function') {
+        try {
+          const success = zoomRef.current.fitToElement(svgRoot, {
+              padding: 40,
+              scaleMultiplier: 0.95
+          });
+          
+            // If fit didn't succeed, try again after a longer delay
+            if (!success && attempt < 3) {
+              setTimeout(() => attemptFit(attempt + 1), 150);
+          }
+        } catch (err) {
+          console.log('Fit to element error:', err);
+          // Retry on error
+            if (attempt < 3) {
+              setTimeout(() => attemptFit(attempt + 1), 150);
+          }
+        }
+        } else if (attempt < 3) {
+        // Ref not ready, try again
+          setTimeout(() => attemptFit(attempt + 1), 150);
       }
-    }
-    if (zoomRef.current && typeof zoomRef.current.centerOn === 'function') {
-      try {
-        const bbox = svgRoot.getBBox(); // get map bounding box
-        const centerX = bbox.x + bbox.width / 2;
-        const centerY = bbox.y + bbox.height / 2;
-        zoomRef.current.centerOn(centerX, centerY);
-      } catch {
-        // ignore if not supported
-      }
-    }
+    };
+    
+      // Start fitting attempts after DOM is ready
+      setTimeout(() => attemptFit(0), 200);
   }, [ensureStudentHousingClasses]);
 
-  // Header helper text
-  const headerContent = (
-    <span className="text-muted small">
-      Use +/- buttons or scroll/pinch to zoom; drag to pan
-    </span>
-  );
-
   return (
-    <PageContainer title="Campus Map" headerContent={headerContent} fluid={true}>
-      <div className="map-wrap">
+    <PageContainer borderless={true}>
+      <div className="map-wrap-fullscreen">
         {/* Disable autoFit so we can center manually */}
         <ZoomPan
           ref={zoomRef}
@@ -131,6 +134,7 @@ export default function CampusMapView({
           className="map-viewport"
           disableDoubleClickZoom={true}
           autoFit={false}
+          initMode="none"
           fitPadding={0}
           fitScaleMultiplier={0.70}
         >
@@ -143,7 +147,6 @@ export default function CampusMapView({
             onReady={handleSvgReady}
           />
         </ZoomPan>
-
       </div>
     </PageContainer>
   );

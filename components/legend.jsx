@@ -64,9 +64,6 @@ const PARKING_ITEMS = [
 ];
 
 const FLOATING_CONTAINER_STYLE = {
-  top: "clamp(80px, 15vh, 250px)",
-  right: "clamp(40px, 6vw, 200px)",
-  zIndex: 1000,
   pointerEvents: "auto",
 };
 
@@ -264,7 +261,7 @@ export default function Legend({ locale = FALLBACK_LOCALE, mapScopeSelector, flo
 
   if (floating) {
     return (
-      <div className="legend-floating position-absolute" style={FLOATING_CONTAINER_STYLE}>
+      <div className="legend-floating-wrapper" style={FLOATING_CONTAINER_STYLE}>
         {legendBody}
       </div>
     );

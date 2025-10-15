@@ -5,8 +5,14 @@ export default function PageContainer({
   children,
   title,
   headerContent,
-  fluid = false // Add a fluid prop, default to false
+  fluid = false, // Add a fluid prop, default to false
+  borderless = false // New prop for borderless full-width map
 }) {
+  // If borderless, return just the children without any wrappers
+  if (borderless) {
+    return <>{children}</>;
+  }
+
   const containerClass = fluid ? "container-fluid px-0" : "container mt-3";
 
   return (
