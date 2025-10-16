@@ -13,7 +13,7 @@ export default function BuildingIndexPage({ buildingId }) {
         <div className="alert alert-warning">
           Not found: <code>{buildingId}</code>
         </div>
-        <Link className="btn btn-secondary" href="/">Back to Campus</Link>
+        <a className="btn btn-secondary" href="/">Back to Campus</a>
       </div>
     );
   }
@@ -47,10 +47,10 @@ export default function BuildingIndexPage({ buildingId }) {
 
       {/* Back to Campus button */}
       <div className="mt-3">
-        <Link href="/" className="btn btn-outline-secondary btn-sm">Back to Campus</Link>
+        <a href="/" className="btn btn-outline-secondary btn-sm">
+          ← Back to Campus
+        </a>
       </div>
     </div>
   );
 }
-
-

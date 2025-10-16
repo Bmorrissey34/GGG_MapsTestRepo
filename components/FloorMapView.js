@@ -4,37 +4,19 @@ import { useState, useEffect, useRef } from 'react';
 import ZoomPan from './ZoomPan';
 import PageContainer from './PageContainer';
 
-// Strip scripts and inline handlers embedded in the SVG source
-const sanitizeSvgMarkup = (markup) =>
-  markup
-    .replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/\son\w+="[^"]*"/gi, '')
-    .replace(/\son\w+='[^']*'/gi, '')
-    .replace(/\s(xlink:)?href=["']\s*javascript:[^"']*["']/gi, ' ');
-
 // FloorMapView component for rendering an interactive floor map
 export default function FloorMapView({ src, interactiveSelector = '.room-group, .room, .label' }) {
   const [selectedId, setSelectedId] = useState(null); // State to track the selected room ID
   const [svgContent, setSvgContent] = useState('');
   const containerRef = useRef(null);
-  const zoomPanRef = useRef(null);
-  const prevHighlightedRef = useRef(null);
-
-  const escapeSelectorId = (value) => {
-    if (!value) return '';
-    if (typeof CSS !== 'undefined' && typeof CSS.escape === 'function') {
-      return CSS.escape(value);
-    }
-    return String(value).replace(/([ -\\/:-@[-`{-~])/g, '\\$1');
-  };
 
   // Content for the header providing user instructions
-  const headerContent = <span className="text-muted small">Use +/- buttons or scroll/pinch to zoom; drag to pan</span>;
+  const headerContent = <span className="text-muted small">Scroll/pinch to zoom • drag to pan</span>;
 
   // Handles the selection of a room or area on the map
   const handleSelect = (id) => {
     if (id) {
-      setSelectedId(String(id).trim()); // Update the selected ID state
+      setSelectedId(id); // Update the selected ID state
     }
   };
 
@@ -44,9 +26,8 @@ export default function FloorMapView({ src, interactiveSelector = '.room-group, 
     (async () => {
       try {
         const res = await fetch(src, { cache: 'no-cache' });
-        const raw = await res.text();
-        const sanitized = sanitizeSvgMarkup(raw);
-        if (isMounted) setSvgContent(sanitized);
+        const text = await res.text();
+        if (isMounted) setSvgContent(text);
       } catch {
         if (isMounted) setSvgContent('<svg xmlns="http://www.w3.org/2000/svg"><text x="10" y="20">Failed to load map</text></svg>');
       }
@@ -129,15 +110,12 @@ export default function FloorMapView({ src, interactiveSelector = '.room-group, 
 
     // Delegate click to capture element IDs
     const onClick = (e) => {
-      const clickable =
+      const target =
         e.target.closest(interactiveSelector) ||
         e.target.closest('[id]');
-      if (!clickable) return;
-      e.preventDefault();
-      const group = clickable.closest('.room-group');
-      const idSource = group?.id || clickable.id || clickable.getAttribute('id');
-      if (idSource) {
-        handleSelect(idSource.trim());
+      if (target) {
+        e.preventDefault();
+        handleSelect(target.id || target.getAttribute('id'));
       }
     };
 
@@ -145,57 +123,25 @@ export default function FloorMapView({ src, interactiveSelector = '.room-group, 
     return () => container.removeEventListener('click', onClick);
   }, [svgContent, interactiveSelector]);
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const prevEl = prevHighlightedRef.current;
-
-    if (prevEl?.isConnected) {
-      prevEl.classList.remove('active-room');
-      prevEl.removeAttribute('aria-selected');
-      prevHighlightedRef.current = null;
-    }
-
-    if (!container || !svgContent || !selectedId) return;
-
-    const escapedId = escapeSelectorId(selectedId);
-    if (!escapedId) return;
-
-    const candidate = container.querySelector(`#${escapedId}`);
-    const target = candidate?.closest('.room-group') || candidate;
-
-    if (target) {
-      target.classList.add('active-room');
-      target.setAttribute('aria-selected', 'true');
-      prevHighlightedRef.current = target;
-    }
-  }, [selectedId, svgContent]);
-
   return (
     // Render the floor map viewer with zoom/pan functionality and selection handling
     <>
-      <PageContainer borderless={true}>
-        <div className="map-wrap-fullscreen">
-          <ZoomPan
-            ref={zoomPanRef}
-            initialScale={1}
-            minScale={0.1}
-            maxScale={6}
-            className="map-viewport"
-            disableDoubleClickZoom={true} // Disable double-click zoom
-            autoFit={false}
-            initMode="none"
-            fitPadding={40}
-            fitScaleMultiplier={0.9}
-          >
-            {/* Replaces <object> with inline SVG so pan/zoom work */}
-            <div
-              ref={containerRef}
-              className="w-100 h-100"
-              style={{ pointerEvents: 'auto' }}
-              dangerouslySetInnerHTML={{ __html: svgContent }}
-            />
-          </ZoomPan>
-        </div>
+      <PageContainer title="Floor Map" headerContent={headerContent}>
+        <ZoomPan
+          initialScale={1}
+          minScale={0.4}
+          maxScale={6}
+          className="w-100"
+          disableDoubleClickZoom={true} // Disable double-click zoom
+        >
+          {/* Replaces <object> with inline SVG so pan/zoom work */}
+          <div
+            ref={containerRef}
+            className="w-100 h-auto"
+            style={{ pointerEvents: 'auto' }}
+            dangerouslySetInnerHTML={{ __html: svgContent }}
+          />
+        </ZoomPan>
       </PageContainer>
       <div className="floor-selection-info">
         {selectedId ? (

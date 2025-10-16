@@ -1,39 +1,58 @@
 // components/CampusMapView.js
 'use client';
 
-import { useMemo, useState, useEffect, useCallback, useRef } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
+import Legend from './legend';
 import InlineSvg from './InlineSvg';
 import ZoomPan from './ZoomPan';
 import PageContainer from './PageContainer';
 import buildings from '../data/buildings.json';
+
+// Color map synced with your legend
+const colorMap = {
+  "Academic Building": "#0f5132",
+  "Student Housing": "#6b21a8",   // violet
+  "Faculty/Staff": "#e874be",
+  "Residents": "#e8bf74",
+  "Students": "#86efac",
+  "Handicap": "#93c5fd",
+  "Restricted Area": "#9ca3af"
+};
+
+const slugifyLabel = (label = '') =>
+  label
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 
 // CampusMapView component displays the campus map with interactive elements
 export default function CampusMapView({
   src = '/BuildingMaps/(Campus)/Campus.svg', // Default path to the campus map SVG
   interactiveSelector = '.building-group, .building', // CSS selector for interactive elements
 }) {
-  const [selectedId, setSelectedId] = useState(null);
-  const router = useRouter();
+  const [selectedId, setSelectedId] = useState(null); // State to track the selected building ID
+  const router = useRouter(); // Next.js router for navigation
 
   // Create a set of known building IDs for quick lookup
   const known = useMemo(
-    () => new Set(buildings.map((b) => String(b.id).toUpperCase())),
+    () => new Set(buildings.map((b) => b.id.toUpperCase())),
     []
   );
 
   // Handle the selection of a building
   const handleSelect = (id) => {
-    if (!id) return;
-    setSelectedId(id);
-    const code = String(id).toUpperCase();
+    if (!id) return; // Ignore if no ID is provided
+    setSelectedId(id); // Update the selected ID state
+    const code = id.toUpperCase(); // Normalize the ID to uppercase
     if (known.has(code)) {
-      router.push(`/building/${code}`);
+      router.push(`/building/${code}`); // Navigate to the selected building
     }
   };
 
-  // Ensure student housing groups carry a helper class for interactivity
-  const ensureStudentHousingClasses = useCallback(() => {
+  // Apply the violet palette to housing buildings once the SVG exists
+
+  const applyStudentHousingColors = useCallback(() => {
     const svgRoot = document.querySelector('.map-wrap svg');
     if (!svgRoot) return;
 
@@ -59,95 +78,74 @@ export default function CampusMapView({
         }
       });
     });
+
+    Object.entries(colorMap).forEach(([label, color]) => {
+      const cls = slugifyLabel(label); // normalize label into a safe CSS class name
+      if (!cls) return;
+      svgRoot.querySelectorAll(`.${cls}`).forEach((el) => {
+        if (el.classList.contains('building')) {
+          el.style.fill = color;
+          el.style.stroke = color;
+          return;
+        }
+
+        if (el.classList.contains('building-group')) {
+          el.querySelectorAll('.building').forEach((shape) => {
+            shape.style.fill = color;
+            shape.style.stroke = color;
+          });
+          return;
+        }
+
+        el.style.fill = color;
+      });
+    });
   }, []);
 
   useEffect(() => {
-    ensureStudentHousingClasses();
-  }, [ensureStudentHousingClasses, src]);
+    applyStudentHousingColors();
+  }, [applyStudentHousingColors, src]);
 
-  // Optional: call imperative fit if your ZoomPan forwards a ref
-  const zoomRef = useRef(null);
-
-  // Runs once the SVG markup is injected
   const handleSvgReady = useCallback(() => {
-    ensureStudentHousingClasses();
+    applyStudentHousingColors();
+  }, [applyStudentHousingColors]);
 
-    const wrapper = document.querySelector('.map-wrap-fullscreen') || document.querySelector('.map-wrap');
-    const svgRoot = wrapper?.querySelector('svg');
-    if (!svgRoot) return;
-
-    svgRoot.setAttribute('preserveAspectRatio', 'xMidYMid meet');
-    svgRoot.setAttribute('data-map-anchor', '');
-
-    svgRoot.querySelectorAll('[data-map-anchor]').forEach((el) => {
-      if (el !== svgRoot) el.removeAttribute('data-map-anchor');
-    });
-
-    // Clear any transforms we may have set previously during experiments
-    const mainGroup =
-      svgRoot.querySelector('g#campus, g#Campus') || svgRoot.querySelector('svg > g');
-    if (mainGroup) {
-      mainGroup.removeAttribute('transform');
-    }
-
-    // Attempt to center the map with retry logic
-    const attemptFit = (attempt = 0) => {
-        if (attempt > 3) return; // Max 3 attempts
-      
-      if (zoomRef.current && typeof zoomRef.current.fitToElement === 'function') {
-        try {
-          const success = zoomRef.current.fitToElement(svgRoot, {
-              padding: 40,
-              scaleMultiplier: 0.95
-          });
-          
-            // If fit didn't succeed, try again after a longer delay
-            if (!success && attempt < 3) {
-              setTimeout(() => attemptFit(attempt + 1), 150);
-          }
-        } catch (err) {
-          console.log('Fit to element error:', err);
-          // Retry on error
-            if (attempt < 3) {
-              setTimeout(() => attemptFit(attempt + 1), 150);
-          }
-        }
-        } else if (attempt < 3) {
-        // Ref not ready, try again
-          setTimeout(() => attemptFit(attempt + 1), 150);
-      }
-    };
-    
-      // Start fitting attempts after DOM is ready
-      setTimeout(() => attemptFit(0), 200);
-  }, [ensureStudentHousingClasses]);
+  // Content for the header, providing user instructions
+  const headerContent = (
+    <span className="text-muted small">Scroll/pinch to zoom, drag to pan</span>
+  );
 
   return (
-    <PageContainer borderless={true}>
-      <div className="map-wrap-fullscreen">
-        {/* Disable autoFit so we can center manually */}
+    <PageContainer title="Campus Map" headerContent={headerContent}>
+      {/* Container for the map and its interactive elements */}
+      <div className="map-wrap">
         <ZoomPan
-          ref={zoomRef}
-          initialScale={1}
-          minScale={0.1}
-          maxScale={6}
-          className="map-viewport"
-          disableDoubleClickZoom={true}
-          autoFit={false}
-          initMode="none"
-          fitPadding={0}
-          fitScaleMultiplier={0.70}
+          initialScale={1} // Default zoom level
+          minScale={0.4}   // Minimum zoom level
+          maxScale={6}     // Maximum zoom level
+          className="w-100" // Full width styling
+          disableDoubleClickZoom={true} // Disable double-click zoom to avoid interference
         >
           <InlineSvg
-            src={src}
-            className="w-100 h-100"
-            interactiveSelector={interactiveSelector}
-            selectedId={selectedId}
-            onSelect={handleSelect}
-            onReady={handleSvgReady}
+            src={src} // Path to the campus map SVG
+            className="w-100 h-auto" // Ensure the SVG scales properly within the container
+            interactiveSelector={interactiveSelector} // CSS selector for interactive elements
+            selectedId={selectedId} // Currently selected building ID
+            onSelect={handleSelect} // Callback for handling building selection
+            onReady={handleSvgReady} // Reapply palette once the SVG markup finishes loading
           />
         </ZoomPan>
       </div>
+
+      {/* Legend component for coloring and labeling map elements */}
+      <Legend
+        locale={
+          typeof navigator !== 'undefined'
+            ? navigator.language.split('-')[0] // Use the browser's language setting
+            : 'en' // Default to English if navigator is unavailable
+        }
+        mapScopeSelector=".map-wrap svg" // Scope the legend to the SVG inside the map-wrap
+      />
     </PageContainer>
   );
 }

@@ -1,23 +1,16 @@
 // components/PageContainer.js
+import Find from "../components/Find";
+import Links from "../components/Links";
 
 // PageContainer component serves as a layout wrapper for pages
-export default function PageContainer({
-  children,
-  title,
-  headerContent,
-  fluid = false, // Add a fluid prop, default to false
-  borderless = false // New prop for borderless full-width map
-}) {
-  // If borderless, return just the children without any wrappers
-  if (borderless) {
-    return <>{children}</>;
-  }
-
-  const containerClass = fluid ? "container-fluid px-0" : "container mt-3";
+export default function PageContainer({ title, headerContent, children, className }) {
+  // Combine default classes with any custom classes passed in as props
+  const containerClasses = `container py-3 ${className || ''}`;
 
   return (
-    <div className={containerClass}>
-      <div className="d-flex justify-content-between align-items-center mb-2">
+    <main className={containerClasses}>
+      {/* Header section with title, Find component, and optional header content */}
+      <div className="d-flex align-items-center justify-content-between mb-2">
         <h1
           className="h4 mb-0"
           style={{
@@ -28,18 +21,20 @@ export default function PageContainer({
         >
           {title}
         </h1>
-         {/* Search component old spot for the find*/}
+        <Find /> {/* Search component */}
         {headerContent} {/* Optional additional header content */}
       </div>
 
       {/* Main content area with a white background and rounded border */}
       <div
-        className="border rounded-3 page-container-inner"
+        className="border rounded-3"
         style={{ overflow: 'hidden', background: 'white' }}
       >
         {children} {/* Render child components */}
       </div>
 
-    </div>
+      {/* Footer section with Links component */}
+      <Links /> {/* Navigation links */}
+    </main>
   );
 }

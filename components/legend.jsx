@@ -2,16 +2,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-
-const HOVER_TARGETS = {
-  academicBuilding: { selector: ".building-group:not(.student-housing)" },
-  studentHousing: { selector: ".building-group.student-housing" },
-  parkingFacultyStaff: { selector: ".staff-parking" },
-  parkingResidents: { selector: ".resident-parking" },
-  parkingStudents: { selector: ".student-parking" },
-  parkingHandicap: { selector: ".handicap-parking" },
-  restrictedArea: { selector: ".restricted-area" },
-};
+import styles from "./Legend.module.css";
 
 const TRANSLATIONS = {
   en: {
@@ -48,6 +39,7 @@ const TRANSLATIONS = {
   },
 };
 
+
 const FALLBACK_LOCALE = "en";
 const SUPPORTED_LOCALES = ["en", "es"];
 
@@ -63,10 +55,6 @@ const PARKING_ITEMS = [
   { color: "#93c5fd", labelKey: "parkingHandicap" },
 ];
 
-const FLOATING_CONTAINER_STYLE = {
-  pointerEvents: "auto",
-};
-
 const normalizeLocale = (value) => {
   if (!value) return null;
   const lower = value.toLowerCase();
@@ -80,68 +68,25 @@ const getStoredLocale = () => {
 };
 
 /** Reusable row with color square + label */
-function SwatchItem({ color, label, className = "", onEnter, onLeave }) {
-  const classes = ["legend-item d-flex align-items-center gap-2", className].filter(Boolean).join(" ");
+function SwatchItem({ color, label, className = "" }) {
   return (
-    <li
-      className={classes}
-      onMouseEnter={() => onEnter?.()}
-      onMouseLeave={() => onLeave?.()}
-      style={{ wordBreak: "break-word" }}
-    >
-      <span
-        className="legend-swatch d-inline-block border rounded"
-        style={{ width: "14px", height: "14px", backgroundColor: color, flexShrink: 0 }}
-      />
-      <span className="legend-item-label">{label}</span>
+    <li className={`${styles.item} ${className}`}>
+      <span className={styles.swatch} style={{ background: color }} />
+      <span>{label}</span>
     </li>
   );
 }
 
-export default function Legend({ locale = FALLBACK_LOCALE, mapScopeSelector, floating = false, className = "" }) {
-  void mapScopeSelector;
-
+export default function Legend({ locale = FALLBACK_LOCALE }) {
   const [open, setOpen] = useState(true);
-  const [userOverride, setUserOverride] = useState(false);
-  const [currentLocale, setCurrentLocale] = useState(
-    () => normalizeLocale(locale) ?? FALLBACK_LOCALE
+  const [userOverride, setUserOverride] = useState(() => getStoredLocale() !== null);
+  const [currentLocale, setCurrentLocale] = useState(() =>
+    getStoredLocale() ?? normalizeLocale(locale) ?? FALLBACK_LOCALE
   );
 
-  const messages = useMemo(
-    () => TRANSLATIONS[currentLocale] ?? TRANSLATIONS[FALLBACK_LOCALE],
-    [currentLocale]
-  );
+  const messages = useMemo(() => TRANSLATIONS[currentLocale] ?? TRANSLATIONS[FALLBACK_LOCALE], [currentLocale]);
   const fallbackMessages = TRANSLATIONS[FALLBACK_LOCALE];
   const t = (key) => messages[key] ?? fallbackMessages[key] ?? key;
-
-  const sendHover = (source, detail) => {
-    if (typeof window === "undefined" || !detail) return;
-    window.dispatchEvent(new CustomEvent("ggcmap-hover", { detail: { source, ...detail } }));
-  };
-
-  const clearHover = (source) => {
-    if (typeof window === "undefined") return;
-    window.dispatchEvent(new CustomEvent("ggcmap-hover-clear", { detail: { source } }));
-  };
-
-  const getHoverHandlers = (key) => {
-    const detail = HOVER_TARGETS[key];
-    if (!detail) return {};
-    const source = `legend:${key}`;
-    return {
-      onEnter: () => sendHover(source, detail),
-      onLeave: () => clearHover(source),
-    };
-  };
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const storedLocale = getStoredLocale();
-    if (storedLocale) {
-      setCurrentLocale(storedLocale);
-      setUserOverride(true);
-    }
-  }, []);
 
   // remember panel open state between sessions
   useEffect(() => {
@@ -178,100 +123,74 @@ export default function Legend({ locale = FALLBACK_LOCALE, mapScopeSelector, flo
     setUserOverride(true);
   };
 
-  const legendBody = (
-    <div
-      className={`legend-panel shadow rounded-4${open ? "" : " legend-panel--collapsed"}`}
-      role="region"
-      aria-label={t("legendTitle")}
-    >
-      {/* Header row: title + EN/ES cluster close together, collapse button floats right */}
-      <div className="legend-header d-flex align-items-center gap-2 mb-2">
-        <div className="legend-title fw-bold">{t("legendTitle")}</div>
+  return (
+    <div className={styles.legendContainer}>
+      <aside className={styles.legend} role="region" aria-label={t("legendTitle")}>
+        {/* Header with title + toggle button (upper-right) */}
+        <div className={styles.legendHeader}>
+          <div className={styles.legendTitle}>{t("legendTitle")}</div>
 
-        <div className="btn-group btn-group-sm ms-2" role="group" aria-label={t("languageLabel")}>
-          {SUPPORTED_LOCALES.map((code) => (
+          <div className={styles.legendControls}>
+            <div className={styles.localeToggle} role="group" aria-label={t("languageLabel")}>
+              {SUPPORTED_LOCALES.map((code) => (
+                <button
+                  key={code}
+                  type="button"
+                  className={`${styles.localeButton} ${
+                    currentLocale === code ? styles.localeButtonActive : ""
+                  }`}
+                  onClick={() => handleLocaleChange(code)}
+                  aria-pressed={currentLocale === code}
+                  aria-label={t(code === "en" ? "languageEnglish" : "languageSpanish")}
+                >
+                  {code.toUpperCase()}
+                </button>
+              ))}
+            </div>
+
             <button
-              key={code}
               type="button"
-              className={`btn btn-sm ${currentLocale === code ? "btn-secondary" : "btn-outline-secondary"}`}
-              onClick={() => handleLocaleChange(code)}
-              aria-pressed={currentLocale === code}
-              aria-label={t(code === "en" ? "languageEnglish" : "languageSpanish")}
+              className={styles.legendToggle}
+              onClick={() => setOpen((v) => !v)}
+              aria-expanded={open}
+              aria-controls="legend-body"
+              title={open ? t("toggleHide") : t("toggleShow")}
             >
-              {code.toUpperCase()}
+              {open ? "\u2212" : "+"}
             </button>
-          ))}
+          </div>
         </div>
 
-        <button
-          type="button"
-          className="legend-toggle ms-auto"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="legend-body"
-          title={open ? t("toggleHide") : t("toggleShow")}
-        >
-          <i
-            className={`bi ${open ? 'bi-chevron-right' : 'bi-chevron-left'} legend-toggle-icon`}
-            aria-hidden="true"
-          ></i>
-          <span className="visually-hidden">{open ? t("toggleHide") : t("toggleShow")}</span>
-        </button>
-      </div>
+        {/* Collapsible body */}
+        <div id="legend-body" hidden={!open} className={styles.legendBody}>
+          <ul className={styles.list}>
+            {BASE_ITEMS.map((item) => (
+              <SwatchItem key={item.labelKey} color={item.color} label={t(item.labelKey)} />
+            ))}
 
-      <div id="legend-body" className="legend-body pt-2" hidden={!open}>
-        <ul className="list-unstyled mb-0">
-          {BASE_ITEMS.map((item) => (
+            {/* Section: Parking */}
+            <li className={styles.sectionHeading}>
+              <span>{t("parking")}</span>
+              <ul className={styles.sublist}>
+                {PARKING_ITEMS.map((item) => (
+                  <li key={item.labelKey} className={styles.subitem}>
+                    <span className={styles.swatch} style={{ background: item.color }} />
+                    <span>{t(item.labelKey)}</span>
+                  </li>
+                ))}
+              </ul>
+            </li>
+
             <SwatchItem
-              key={item.labelKey}
-              color={item.color}
-              label={t(item.labelKey)}
-              className="mb-2"
-              {...getHoverHandlers(item.labelKey)}
+              color="#9ca3af"
+              label={t("restrictedArea")}
+              className={styles.sectionLabel}
             />
-          ))}
-
-          <li className="mt-3">
-            <div className="fw-semibold legend-section-heading">
-              {t("parking")}
-            </div>
-            <ul className="list-unstyled mb-0 ps-3 mt-2">
-              {PARKING_ITEMS.map((item) => (
-                <SwatchItem
-                  key={item.labelKey}
-                  color={item.color}
-                  label={t(item.labelKey)}
-                  className="mb-2"
-                  {...getHoverHandlers(item.labelKey)}
-                />
-              ))}
-            </ul>
-          </li>
-
-          <SwatchItem
-            color="#9ca3af"
-            label={t("restrictedArea")}
-            className="mt-3 mb-0"
-            {...getHoverHandlers("restrictedArea")}
-          />
-        </ul>
-      </div>
+          </ul>
+        </div>
+      </aside>
     </div>
   );
-
-  if (floating) {
-    return (
-      <div className="legend-floating-wrapper" style={FLOATING_CONTAINER_STYLE}>
-        {legendBody}
-      </div>
-    );
-  }
-
-  const rootClassName = ["legend-slot", className, open ? "" : "is-collapsed"].filter(Boolean).join(" ");
-
-  return (
-    <aside className={rootClassName} aria-label={t("legendTitle")}>
-      {legendBody}
-    </aside>
-  );
 }
+
+
